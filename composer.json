@@ -1,0 +1,40 @@
+{
+    "name": "sp/fixture-dumper",
+    "type": "library",
+    "description": "Dump fixtures from doctrine.",
+    "keywords": ["database", "fixture", "dumper"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Parsiegla",
+            "email": "martin.parsiegla@gmail.com",
+            "homepage": "http://speanet.info"
+        },
+        {
+            "name": "Community contributions",
+            "homepage": "https://github.com/Spea/SpBowerBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "doctrine/common": ">=2.2,<2.5-dev",
+        "symfony/yaml": ">=2.1",
+        "jms/cg": "1.0.0",
+        "doctrine/data-fixtures": "*@dev"
+    },
+    "require-dev": {
+        "doctrine/orm": ">=2.2,<2.5-dev",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "suggest": {
+        "doctrine/orm": "For dumping ORM fixtures",
+        "doctrine/mongodb-odm": "For dumping MongoDB ODM fixtures",
+        "doctrine/phpcr-odm": "For dumping PHPCR ODM fixtures"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "autoload": {
+        "psr-0": { "Sp\\FixtureDumper": "src/" }
+    }
+}
