@@ -15,7 +15,7 @@ abstract class Dumper
 
     protected $objectManager;
 
-    public function __construct(ObjectManager $objectManager, AbstractGenerator $generator)
+    public function __construct(ObjectManager $objectManager, AbstractGenerator $generator = null)
     {
         $this->generator = $generator;
         $this->objectManager = $objectManager;
@@ -24,7 +24,7 @@ abstract class Dumper
     public function dump($format, $path)
     {
         $meta = $this->getAllMetadata();
-
+        $this->getDumpOrder($meta);
 
     }
 

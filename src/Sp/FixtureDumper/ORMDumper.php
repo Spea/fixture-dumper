@@ -2,11 +2,11 @@
 
 namespace Sp\FixtureDumper;
 
+use Doctrine\ORM\Internal\CommitOrderCalculator;
+
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-use Doctrine\ORM\Internal\CommitOrderCalculator;
-
 class ORMDumper extends Dumper
 {
     protected function getDumpOrder(array $classes)
