@@ -12,13 +12,14 @@
         },
         {
             "name": "Community contributions",
-            "homepage": "https://github.com/Spea/SpBowerBundle/contributors"
+            "homepage": "https://github.com/Spea/fixture-dumper/contributors"
         }
     ],
     "require": {
         "php": ">=5.3.2",
         "doctrine/common": ">=2.2,<2.5-dev",
-        "symfony/yaml": ">=2.1",
+        "symfony/options-resolver": ">=2.1",
+        "symfony/filesystem": ">=2.1",
         "jms/cg": "1.0.0",
         "doctrine/data-fixtures": "*@dev"
     },
@@ -27,6 +28,7 @@
         "phpunit/phpunit": "3.7.*"
     },
     "suggest": {
+        "symfony/yaml": "If you want to dump fixtures in yml format",
         "doctrine/orm": "For dumping ORM fixtures",
         "doctrine/mongodb-odm": "For dumping MongoDB ODM fixtures",
         "doctrine/phpcr-odm": "For dumping PHPCR ODM fixtures"
