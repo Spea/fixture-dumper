@@ -4,12 +4,21 @@ namespace Sp\FixtureDumper\Tests\Generator\Fixture;
 
 
 /**
+ * @Entity
+ *
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
 class Author
 {
+    /**
+     * @Id @Column(type="integer")
+     * @GeneratedValue
+     */
     private $id;
 
+    /**
+     * @Column(type="string", length=50, nullable=true)
+     */
     private $username;
 
     public function setId($id)

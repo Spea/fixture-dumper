@@ -3,7 +3,7 @@ namespace Sp\FixtureDumper\Tests\Generator\Fixture;
 use Sp\FixtureDumper\Tests\Fixture\Post;
 
 /**
- * This code was generated automatically by the DataFixtures library, manual changes to it
+ * This code was generated automatically by the FixtureDumper library, manual changes to it
  * may be lost upon next generation.
  */
 class LoadPostData extends \Doctrine\Common\DataFixtures\AbstractFixture implements \Doctrine\Common\DataFixtures\DependentFixtureInterface

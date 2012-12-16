@@ -44,7 +44,7 @@ class ClassFixtureGenerator extends AbstractGenerator
             $writer = new Writer();
             $writer
                 ->writeln('/**')
-                ->writeln(' * This code was generated automatically by the DataFixtures library, manual changes to it')
+                ->writeln(' * This code was generated automatically by the FixtureDumper library, manual changes to it')
                 ->writeln(' * may be lost upon next generation.')
                 ->writeln(' */');
 
