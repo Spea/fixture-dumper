@@ -1,0 +1,11 @@
+Sp\FixtureDumper\Tests\Fixture\Post:
+    post10:
+        description: Description
+        title: Title
+        created: '2012-12-12 12:12:12'
+        author: '@author2'
+    post11:
+        description: Description2
+        title: Title2
+        created: '2012-12-12 12:12:12'
+        author: '@author2'

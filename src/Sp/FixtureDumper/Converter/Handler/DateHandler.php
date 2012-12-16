@@ -30,12 +30,12 @@ class DateHandler implements HandlerSubscriberInterface
 
     public function convertToYml(VisitorInterface $visitor, \DateTime $data)
     {
-        return $data->format(\DateTime::ISO8601);
+        return $data->format("Y-m-d H:i:s");
     }
 
     public function convertToPhp(VisitorInterface $visitor, \DateTime $data)
     {
-        return sprintf("new \\DateTime('%s')", $data->format(\DateTime::ISO8601));
+        return sprintf("new \\DateTime('%s')", $data->format("Y-m-d H:i:s"));
     }
 
     public function convertToArray(VisitorInterface $visitor, \DateTime $data)

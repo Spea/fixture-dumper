@@ -1,0 +1,5 @@
+$fixtures['Sp\FixtureDumper\Tests\Fixture\Author'] = array(
+    'author2' => array(
+        'username' => 'Username'
+    ),
+);

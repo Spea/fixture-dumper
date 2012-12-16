@@ -100,6 +100,38 @@ abstract class AbstractGenerator
     }
 
     /**
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     */
+    public function setManager($manager)
+    {
+        $this->manager = $manager;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectManager
+     */
+    public function getManager()
+    {
+        return $this->manager;
+    }
+
+    /**
+     * @param \Sp\FixtureDumper\Generator\NamingStrategy $namingStrategy
+     */
+    public function setNamingStrategy($namingStrategy)
+    {
+        $this->namingStrategy = $namingStrategy;
+    }
+
+    /**
+     * @return \Sp\FixtureDumper\Generator\NamingStrategy
+     */
+    public function getNamingStrategy()
+    {
+        return $this->namingStrategy;
+    }
+
+    /**
      * Prepares the given fixture for writing to a file.
      *
      * @param $fixture
