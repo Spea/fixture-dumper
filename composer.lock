@@ -1,31 +1,31 @@
 {
-    "hash": "cc135134eefeba3f357ef92c451595af",
+    "hash": "e7ae1b647bfc6a1997b99a19bb0b94c0",
     "packages": [
         {
             "name": "doctrine/common",
-            "version": "2.3.0",
+            "version": "2.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common",
-                "reference": "2.3.0"
+                "reference": "bb0aebbf234db52df476a2b473d434745b34221c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/common/zipball/2.3.0",
-                "reference": "2.3.0",
+                "url": "https://github.com/doctrine/common/archive/bb0aebbf234db52df476a2b473d434745b34221c.zip",
+                "reference": "bb0aebbf234db52df476a2b473d434745b34221c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2012-09-19 22:55:18",
+            "time": "2012-09-20 05:55:18",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.3.x-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Doctrine\\Common": "lib/"
@@ -165,34 +165,135 @@
             ]
         },
         {
+            "name": "phpcollection/phpcollection",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/schmittjoh/php-collection",
+                "reference": "e0f5d0ee4cb6708185bd045ce70faf93dc460db6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/schmittjoh/php-collection/archive/e0f5d0ee4cb6708185bd045ce70faf93dc460db6.zip",
+                "reference": "e0f5d0ee4cb6708185bd045ce70faf93dc460db6",
+                "shasum": ""
+            },
+            "require": {
+                "phpoption/phpoption": ">=0.9,<2.0-dev"
+            },
+            "time": "2012-11-30 10:50:17",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhpCollection": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "http://jmsyst.com",
+                    "role": "Developer of wrapped JMSSerializerBundle"
+                }
+            ],
+            "description": "General-Purpose Collection Library for PHP",
+            "keywords": [
+                "map",
+                "set",
+                "list",
+                "sequence",
+                "collection"
+            ]
+        },
+        {
+            "name": "phpoption/phpoption",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/schmittjoh/php-option",
+                "reference": "7c3d959ac1ab7677cca6463dbb7d443ef9eea8ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/schmittjoh/php-option/archive/7c3d959ac1ab7677cca6463dbb7d443ef9eea8ed.zip",
+                "reference": "7c3d959ac1ab7677cca6463dbb7d443ef9eea8ed",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2012-12-07 09:34:13",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhpOption\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com",
+                    "homepage": "http://jmsyst.com",
+                    "role": "Developer of wrapped JMSSerializerBundle"
+                }
+            ],
+            "description": "Option Type for PHP",
+            "keywords": [
+                "php",
+                "language",
+                "type",
+                "option"
+            ]
+        },
+        {
             "name": "symfony/filesystem",
-            "version": "v2.1.4",
+            "version": "dev-master",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem",
-                "reference": "v2.1.4"
+                "reference": "1747c69853d974a9bc87fb9a0e5b55ad2a785577"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Filesystem/archive/v2.1.4.zip",
-                "reference": "v2.1.4",
+                "url": "https://github.com/symfony/Filesystem/archive/1747c69853d974a9bc87fb9a0e5b55ad2a785577.zip",
+                "reference": "1747c69853d974a9bc87fb9a0e5b55ad2a785577",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-11-20 13:21:32",
+            "time": "2012-12-14 22:27:02",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "Symfony\\Component\\Filesystem": ""
+                    "Symfony\\Component\\Filesystem\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -214,33 +315,33 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v2.1.4",
+            "version": "dev-master",
             "target-dir": "Symfony/Component/OptionsResolver",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/OptionsResolver",
-                "reference": "v2.1.4"
+                "reference": "70b156e8cfaecef25fd11f8bbed561abe4b639f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/OptionsResolver/archive/v2.1.4.zip",
-                "reference": "v2.1.4",
+                "url": "https://github.com/symfony/OptionsResolver/archive/70b156e8cfaecef25fd11f8bbed561abe4b639f4.zip",
+                "reference": "70b156e8cfaecef25fd11f8bbed561abe4b639f4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-11-08 09:51:48",
+            "time": "2012-12-11 10:49:22",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "Symfony\\Component\\OptionsResolver": ""
+                    "Symfony\\Component\\OptionsResolver\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -267,33 +368,33 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.1.4",
+            "version": "dev-master",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml",
-                "reference": "v2.1.4"
+                "reference": "69f09b9a989c54a6c3dcb1b88c981f10fde40d62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Yaml/archive/v2.1.4.zip",
-                "reference": "v2.1.4",
+                "url": "https://github.com/symfony/Yaml/archive/69f09b9a989c54a6c3dcb1b88c981f10fde40d62.zip",
+                "reference": "69f09b9a989c54a6c3dcb1b88c981f10fde40d62",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-11-08 09:51:48",
+            "time": "2012-12-15 13:02:34",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "Symfony\\Component\\Yaml": ""
+                    "Symfony\\Component\\Yaml\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -318,8 +419,8 @@
     "aliases": [
 
     ],
-    "minimum-stability": "stable",
-    "stability-flags": {
-        "doctrine/data-fixtures": 20
-    }
+    "minimum-stability": "dev",
+    "stability-flags": [
+
+    ]
 }

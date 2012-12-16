@@ -44,10 +44,9 @@ abstract class AbstractGenerator
      * @param \Sp\FixtureDumper\Converter\VisitorInterface $visitor
      * @param \Sp\FixtureDumper\Converter\DefaultNavigator $navigator
      */
-    public function __construct(ObjectManager $manager, NamingStrategy $namingStrategy, VisitorInterface $visitor = null, DefaultNavigator $navigator = null)
+    public function __construct(ObjectManager $manager, NamingStrategy $namingStrategy, VisitorInterface $visitor = null)
     {
         $this->manager = $manager;
-        $this->navigator = $navigator ?: new DefaultNavigator();
         $this->namingStrategy = $namingStrategy;
         $this->visitor = $visitor;
     }
@@ -82,6 +81,23 @@ abstract class AbstractGenerator
         }
 
         return $this->visitor;
+    }
+
+    /**
+     * @param \Sp\FixtureDumper\Converter\DefaultNavigator $navigator
+     */
+    public function setNavigator($navigator)
+    {
+        var_dump("foobar");
+        $this->navigator = $navigator;
+    }
+
+    /**
+     * @return \Sp\FixtureDumper\Converter\DefaultNavigator
+     */
+    public function getNavigator()
+    {
+        return $this->navigator;
     }
 
     /**

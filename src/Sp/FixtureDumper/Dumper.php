@@ -7,6 +7,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Sp\FixtureDumper\Generator\AbstractGenerator;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Symfony\Component\Filesystem\Filesystem;
+use PhpCollection\MapInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Sp\FixtureDumper\Converter\Handler\HandlerRegistryInterface;
+use Sp\FixtureDumper\Converter\DefaultNavigator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -24,6 +28,11 @@ abstract class Dumper
     protected $objectManager;
 
     /**
+     * @var Converter\Handler\HandlerRegistryInterface
+     */
+    protected $handlerRegistry;
+
+    /**
      * @var bool
      */
     protected $dumpMultipleFiles;
@@ -32,25 +41,32 @@ abstract class Dumper
      * Construct.
      *
      * @param \Doctrine\Common\Persistence\ObjectManager $objectManager
-     * @param Generator\AbstractGenerator                $generator
+     * @param Converter\Handler\HandlerRegistryInterface $handlerRegistry
+     * @param \PhpCollection\MapInterface                $generators
+     *
+     * @internal param \Sp\FixtureDumper\Generator\AbstractGenerator $generator
      */
-    public function __construct(ObjectManager $objectManager, AbstractGenerator $generator = null)
+    public function __construct(ObjectManager $objectManager, HandlerRegistryInterface $handlerRegistry, MapInterface $generators)
     {
-        $this->generator = $generator;
         $this->objectManager = $objectManager;
+        $this->handlerRegistry = $handlerRegistry;
+        $this->generators = $generators;
         $this->dumpMultipleFiles = true;
     }
 
-    public function dump($path, array $models = null, array $options = array())
+    public function dump($path, $format, array $models = null, array $options = array())
     {
         $metadata = $this->getDumpOrder($this->getAllMetadata());
+        $generator = $this->generators->get($format)->get();
+        $generator->setNavigator(new DefaultNavigator($this->handlerRegistry, $format));
+
         $fixtures = array();
         foreach ($metadata as $data) {
-            $fixture = $this->generator->generate($data, $models, $options);
-            $fileName = $this->generator->createFileName($data, false);
+            $fixture = $generator->generate($data, $models, $options);
+            $fileName = $generator->createFileName($data, false);
             if ($this->getDumpMultipleFiles()) {
-                $fileName = $this->generator->createFileName($data, true);
-                $this->writeFixture($fixture, $path, $fileName);
+                $fileName = $generator->createFileName($data, true);
+                $this->writeFixture($generator, $fixture, $path, $fileName);
             }
 
             $fixtures[] = $fixture;
@@ -59,7 +75,7 @@ abstract class Dumper
         if (!$this->getDumpMultipleFiles() && count($fixtures) != 0) {
             $fixture = implode("\n\n", $fixtures);
 
-            $this->writeFixture($fixture, $path, $fileName);
+            $this->writeFixture($generator, $fixture, $path, $fileName);
         }
     }
 
@@ -80,18 +96,19 @@ abstract class Dumper
     }
 
     /**
-     * @param $fixture
-     * @param $path
-     * @param $fileName
+     * @param Generator\AbstractGenerator $generator
+     * @param string                      $fixture
+     * @param string                      $path
+     * @param string                      $fileName
      */
-    protected function writeFixture($fixture, $path, $fileName)
+    protected function writeFixture(AbstractGenerator $generator, $fixture, $path, $fileName)
     {
         $filesystem = new Filesystem();
         if (!$filesystem->exists($path)) {
             $filesystem->mkdir($path);
         }
 
-        $fixture = $this->generator->prepareForWrite($fixture);
+        $fixture = $generator->prepareForWrite($fixture);
 
         file_put_contents($path .DIRECTORY_SEPARATOR. $fileName, $fixture);
     }

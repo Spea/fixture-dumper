@@ -20,9 +20,11 @@
         "doctrine/common": ">=2.2,<2.5-dev",
         "symfony/options-resolver": ">=2.1",
         "symfony/filesystem": ">=2.1",
+        "phpcollection/phpcollection": "0.1.*",
         "jms/cg": "1.0.0",
-        "doctrine/data-fixtures": "*@dev"
+        "doctrine/data-fixtures": "*"
     },
+    "minimum-stability": "dev",
     "require-dev": {
         "doctrine/orm": ">=2.2,<2.5-dev",
         "phpunit/phpunit": "3.7.*"
