@@ -60,7 +60,55 @@ abstract class AbstractGenerator
             $models = $this->getModels($metadata);
         }
 
-        return $this->doGenerate($metadata, $models, $options);
+        $preparedData = array();
+        foreach ($models as $model) {
+            $data['fields'] = $this->processFieldNames($metadata, $model);
+            $data['associations'] = $this->processAssociationNames($metadata, $model);
+
+            $preparedData[$this->namingStrategy->modelName($model, $metadata)] = $data;
+        }
+
+        return $this->doGenerate($metadata, $preparedData, $options);
+    }
+
+    protected function processFieldNames(ClassMetadata $metadata, $model)
+    {
+        $data = array();
+        foreach ($metadata->getFieldNames() as $fieldName) {
+            if ($metadata->isIdentifier($fieldName)) {
+                continue;
+            }
+
+            $data[$fieldName] = $this->navigator->accept($this->getVisitor(), $this->readProperty($model, $fieldName));
+        }
+
+        return $data;
+    }
+
+    protected function processAssociationNames(ClassMetadata $metadata, $model)
+    {
+        $data = array();
+        foreach ($metadata->getAssociationNames() as $assocName) {
+            $propertyValue = $this->readProperty($model, $assocName);
+            if (null === $propertyValue || $metadata->isAssociationInverseSide($assocName)) {
+                continue;
+            }
+
+            if ($metadata->isSingleValuedAssociation($assocName)) {
+                $assocValue = $this->namingStrategy->modelName($propertyValue, $this->manager->getClassMetadata(get_class($propertyValue)));
+                $assocValue = $this->navigator->accept($this->getVisitor(), $assocValue, 'reference');
+                $data[$assocName] = $assocValue;
+            } else {
+                $data[$assocName] = array();
+                foreach ($propertyValue as $value) {
+                    $assocValue = $this->namingStrategy->modelName($propertyValue, $this->manager->getClassMetadata(get_class($value)));
+                    $assocValue = $this->navigator->accept($this->getVisitor(), $assocValue, 'reference');
+                    $data[$assocName][] = $assocValue;
+                }
+            }
+        }
+
+        return $data;
     }
 
     /**
@@ -157,12 +205,12 @@ abstract class AbstractGenerator
      * Generates the fixture for the specified metadata.
      *
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
-     * @param array                                              $models
+     * @param array                                              $data
      * @param array                                              $options
      *
      * @return mixed
      */
-    abstract protected function doGenerate(ClassMetadata $metadata, array $models = null, array $options = array());
+    abstract protected function doGenerate(ClassMetadata $metadata, array $data, array $options = array());
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

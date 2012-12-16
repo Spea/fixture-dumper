@@ -28,15 +28,17 @@ class DefaultNavigator
     /**
      * @param VisitorInterface $visitor
      * @param  mixed           $value
+     * @param null|string      $type
      *
      * @return string
      */
-    public function accept(VisitorInterface $visitor, $value)
+    public function accept(VisitorInterface $visitor, $value, $type = null)
     {
-        $type = gettype($value);
-
-        if ('object' ===  $type) {
-            $type = get_class($value);
+        if (null === $type) {
+            $type = gettype($value);
+            if ('object' ===  $type) {
+                $type = get_class($value);
+            }
         }
 
         switch ($type) {
@@ -51,6 +53,8 @@ class DefaultNavigator
                 return $visitor->visitBoolean($value);
             case 'array':
                 return $visitor->visitArray($value);
+            case 'reference':
+                return $visitor->visitReference($value);
             default:
                 $handler = $this->handlerRegistry->getHandler($type, $this->format);
                 if (null !== $handler) {

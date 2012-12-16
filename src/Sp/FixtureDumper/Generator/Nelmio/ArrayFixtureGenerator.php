@@ -2,10 +2,10 @@
 
 namespace Sp\FixtureDumper\Generator\Nelmio;
 
-use Sp\FixtureDumper\Generator\NelmioGenerator;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use CG\Generator\Writer;
-use Sp\FixtureDumper\Converter\PhpVisitor;
+use Sp\FixtureDumper\Converter\Nelmio\ArrayVisitor;
+use Sp\FixtureDumper\Generator\NelmioGenerator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -60,10 +60,6 @@ class ArrayFixtureGenerator extends NelmioGenerator
     protected function convertValue($value)
     {
         if (!is_array($value)) {
-            if ('@' === $value[0]) {
-                return "'$value'";
-            }
-
             return $value;
         }
 
@@ -99,7 +95,7 @@ class ArrayFixtureGenerator extends NelmioGenerator
 
     protected function getDefaultVisitor()
     {
-        return new PhpVisitor();
+        return new ArrayVisitor();
     }
 
 

@@ -37,7 +37,7 @@ class ClassFixtureGenerator extends AbstractGenerator
     /**
      * {@inheritdoc}
      */
-    protected function doGenerate(ClassMetadata $metadata, array $models = null, array $options = array())
+    protected function doGenerate(ClassMetadata $metadata, array $data, array $options = array())
     {
         static $docBlock;
         if (empty($docBlock)) {
@@ -60,7 +60,7 @@ class ClassFixtureGenerator extends AbstractGenerator
             $this->addDependentFixtureInterface($fixtureClass, $metadata, $options);
         }
 
-        $this->generateLoadMethod($fixtureClass, $metadata, $models);
+        $this->generateLoadMethod($fixtureClass, $metadata, $data);
 
         $generator = new DefaultGeneratorStrategy();
         $content = $generator->generate($fixtureClass);
@@ -68,7 +68,7 @@ class ClassFixtureGenerator extends AbstractGenerator
         return $content;
     }
 
-    protected function generateLoadMethod(PhpClass $class, ClassMetadata $metadata, array $models)
+    protected function generateLoadMethod(PhpClass $class, ClassMetadata $metadata, array $data)
     {
         $writer = new Writer();
         $method = PhpMethod::create('load');
@@ -77,8 +77,8 @@ class ClassFixtureGenerator extends AbstractGenerator
         $method->addParameter($managerParameter);
         $class->setMethod($method);
 
-        foreach ($models as $model) {
-            $this->generateModel($model, $metadata, $writer);
+        foreach ($data as $modelName => $modelData) {
+            $this->generateModel($modelName, $modelData, $metadata, $writer);
             $writer->writeln("");
         }
 
@@ -86,31 +86,17 @@ class ClassFixtureGenerator extends AbstractGenerator
         $method->setBody($writer->getContent());
     }
 
-    protected function generateModel($model, ClassMetadata $metadata, Writer $writer)
+    protected function generateModel($modelName, $modelData, ClassMetadata $metadata, Writer $writer)
     {
-        $modelName = $this->namingStrategy->modelName($model, $metadata);
         $writer->writeln(sprintf("$%s = new %s();", $modelName, ClassUtils::getClassName($metadata->getName())));
-        foreach ($metadata->getFieldNames() as $fieldName) {
-            if ($metadata->isIdentifier($fieldName)) {
-                continue;
-            }
-            $setter = sprintf('set%s', ucfirst($fieldName));
-            $writer->writeln(sprintf("$%s->%s(%s);", $modelName, $setter, $this->navigator->accept($this->getVisitor(), $this->readProperty($model, $fieldName))));
+        foreach ($modelData['fields'] as $key => $value) {
+            $setter = sprintf('set%s', ucfirst($key));
+            $writer->writeln(sprintf("$%s->%s(%s);", $modelName, $setter, $value));
         }
 
-        foreach ($metadata->getAssociationNames() as $assocName) {
-            if (!$metadata->isSingleValuedAssociation($assocName)) {
-                continue;
-            }
-
+        foreach ($modelData['associations'] as $assocName => $reference) {
             $setter = sprintf('set%s', ucfirst($assocName));
-            $propertyValue = $this->readProperty($model, $assocName);
-
-            $reference = 'null';
-            if (null !== $propertyValue) {
-                $reference = sprintf("\$this->getReference('%s')", $this->namingStrategy->modelName($propertyValue, $this->manager->getClassMetadata(get_class($propertyValue))));
-            }
-
+            $reference = sprintf("\$this->getReference('%s')", $reference);
             $writer->writeln(sprintf("$%s->%s(%s);", $modelName, $setter, $reference));
         }
 

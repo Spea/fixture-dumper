@@ -48,9 +48,16 @@ class DefaultVisitor implements VisitorInterface
     }
 
     /**
-     * @param array $object
-     *
-     * @return string
+     * {@inheritdoc}
+     */
+    public function visitReference($reference)
+    {
+        return $reference;
+    }
+
+
+    /**
+     * {@inheritdoc}
      */
     public function visitObject($object)
     {

@@ -43,6 +43,13 @@ interface VisitorInterface
     public function visitArray(array $array);
 
     /**
+     * @param mixed $reference
+     *
+     * @return string
+     */
+    public function visitReference($reference);
+
+    /**
      * @param array $object
      *
      * @return string

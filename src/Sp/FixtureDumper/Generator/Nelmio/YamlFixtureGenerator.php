@@ -2,9 +2,10 @@
 
 namespace Sp\FixtureDumper\Generator\Nelmio;
 
-use Sp\FixtureDumper\Generator\NelmioGenerator;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Sp\FixtureDumper\Converter\Nelmio\YamlVisitor;
+use Sp\FixtureDumper\Generator\NelmioGenerator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -29,5 +30,10 @@ class YamlFixtureGenerator extends NelmioGenerator
         $yaml = new Yaml();
 
         return $yaml->dump(array($metadata->getName() => $data), 3);
+    }
+
+    protected function getDefaultVisitor()
+    {
+        return new YamlVisitor();
     }
 }
