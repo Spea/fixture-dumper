@@ -60,11 +60,4 @@ class YamlFixtureGenerator extends AbstractGenerator
         return $yaml->dump(array($metadata->getName() => $result), 3);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDefaultVisitor()
-    {
-        return new YamlVisitor();
-    }
 }

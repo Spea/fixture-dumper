@@ -5,7 +5,7 @@ namespace Sp\FixtureDumper\Converter;
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class YamlVisitor implements VisitorInterface
+class DefaultVisitor implements VisitorInterface
 {
     /**
      * {@inheritdoc}

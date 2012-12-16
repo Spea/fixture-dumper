@@ -58,7 +58,6 @@ class ClassFixtureGenerator extends AbstractGenerator
 
         if (count($metadata->getAssociationNames()) !== 0) {
             $this->addDependentFixtureInterface($fixtureClass, $metadata, $options);
-
         }
 
         $this->generateLoadMethod($fixtureClass, $metadata, $models);

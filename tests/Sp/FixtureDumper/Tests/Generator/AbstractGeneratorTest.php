@@ -57,16 +57,15 @@ class AbstractGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetVisitorReturnsDefault()
     {
-        $this->generator->expects($this->once())->method('getDefaultVisitor');
+        $result = $this->generator->getVisitor();
 
-        $this->generator->getVisitor();
+        $this->assertInstanceOf('Sp\FixtureDumper\Converter\DefaultVisitor', $result);
     }
 
     public function testGetVisitorReturnsSet()
     {
         $visitor = $this->getMock('Sp\FixtureDumper\Converter\VisitorInterface');
         $generator = $this->getMockForAbstractClass('Sp\FixtureDumper\Generator\AbstractGenerator', array($this->manager, $this->namingStrategy, $visitor));
-        $generator->expects($this->never())->method('getDefaultVisitor');
 
         $result = $generator->getVisitor();
         $this->assertEquals($visitor, $result);

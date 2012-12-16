@@ -52,7 +52,6 @@ class DefaultNavigator
             case 'array':
                 return $visitor->visitArray($value);
             default:
-
                 $handler = $this->handlerRegistry->getHandler($type, $this->format);
                 if (null !== $handler) {
                     return call_user_func($handler, $visitor, $value);

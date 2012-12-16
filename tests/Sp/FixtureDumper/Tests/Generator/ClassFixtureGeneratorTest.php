@@ -6,6 +6,8 @@ use Sp\FixtureDumper\Generator\ClassFixtureGenerator;
 use Sp\FixtureDumper\Tests\Generator\Fixture\Author;
 use Sp\FixtureDumper\Tests\Generator\Fixture\Post;
 use Sp\FixtureDumper\Generator\ClassNamingStrategy;
+use Sp\FixtureDumper\Converter\DefaultNavigator;
+use Sp\FixtureDumper\Converter\Handler\HandlerRegistry;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -59,6 +61,7 @@ class ClassFixtureGeneratorTest extends \PHPUnit_Framework_TestCase
         $objectManager->expects($this->once())->method('getRepository')->will($this->returnValue($repository));
         $objectManager->expects($this->any())->method('getClassMetadata')->with($this->equalTo('Sp\FixtureDumper\Tests\Generator\Fixture\Author'))->will($this->returnValue($authorClassMetadata));
         $classFixtureGenerator = new ClassFixtureGenerator($objectManager, new ClassNamingStrategy());
+        $classFixtureGenerator->setNavigator(new DefaultNavigator(new HandlerRegistry(), 'php'));
 
         $output = $classFixtureGenerator->generate($classMetadata, null, array('namespace' => 'Sp\FixtureDumper\Tests\Generator\Fixture'));
 
@@ -89,6 +92,7 @@ class ClassFixtureGeneratorTest extends \PHPUnit_Framework_TestCase
         $repository->expects($this->once())->method('findAll')->will($this->returnValue($models));
         $objectManager->expects($this->once())->method('getRepository')->will($this->returnValue($repository));
         $classFixtureGenerator = new ClassFixtureGenerator($objectManager, new ClassNamingStrategy());
+        $classFixtureGenerator->setNavigator(new DefaultNavigator(new HandlerRegistry(), 'php'));
 
         $output = $classFixtureGenerator->generate($classMetadata, null, array('namespace' => 'Sp\FixtureDumper\Tests\Generator\Fixture'));
 

@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sp\FixtureDumper\Converter\DefaultNavigator;
 use Sp\FixtureDumper\Converter\VisitorInterface;
+use Sp\FixtureDumper\Converter\DefaultVisitor;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -42,7 +43,6 @@ abstract class AbstractGenerator
      * @param \Doctrine\Common\Persistence\ObjectManager   $manager
      * @param NamingStrategy                               $namingStrategy
      * @param \Sp\FixtureDumper\Converter\VisitorInterface $visitor
-     * @param \Sp\FixtureDumper\Converter\DefaultNavigator $navigator
      */
     public function __construct(ObjectManager $manager, NamingStrategy $namingStrategy, VisitorInterface $visitor = null)
     {
@@ -88,7 +88,6 @@ abstract class AbstractGenerator
      */
     public function setNavigator($navigator)
     {
-        var_dump("foobar");
         $this->navigator = $navigator;
     }
 
@@ -134,15 +133,18 @@ abstract class AbstractGenerator
     abstract protected function doGenerate(ClassMetadata $metadata, array $models = null, array $options = array());
 
     /**
-     * @return \Sp\FixtureDumper\Converter\VisitorInterface
-     */
-    abstract protected function getDefaultVisitor();
-
-    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     protected function setDefaultOptions(OptionsResolver $resolver)
     {}
+
+    /**
+     * @return \Sp\FixtureDumper\Converter\VisitorInterface
+     */
+    protected function getDefaultVisitor()
+    {
+        return new DefaultVisitor();
+    }
 
     /**
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
