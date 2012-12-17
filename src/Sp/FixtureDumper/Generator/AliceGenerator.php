@@ -7,7 +7,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-abstract class NelmioGenerator extends AbstractGenerator
+abstract class AliceGenerator extends AbstractGenerator
 {
     /**
      * {@inheritdoc}

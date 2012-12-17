@@ -1,16 +1,16 @@
 <?php
 
-namespace Sp\FixtureDumper\Generator\Nelmio;
+namespace Sp\FixtureDumper\Generator\Alice;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use CG\Generator\Writer;
-use Sp\FixtureDumper\Converter\Nelmio\ArrayVisitor;
-use Sp\FixtureDumper\Generator\NelmioGenerator;
+use Sp\FixtureDumper\Converter\Alice\ArrayVisitor;
+use Sp\FixtureDumper\Generator\AliceGenerator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class ArrayFixtureGenerator extends NelmioGenerator
+class ArrayFixtureGenerator extends AliceGenerator
 {
     /**
      * @var \CG\Generator\Writer

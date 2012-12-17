@@ -1,6 +1,6 @@
 <?php
 
-namespace Sp\FixtureDumper\Converter\Nelmio;
+namespace Sp\FixtureDumper\Converter\Alice;
 
 use Sp\FixtureDumper\Converter\PhpVisitor;
 

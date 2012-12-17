@@ -1,10 +1,10 @@
 <?php
 
-namespace Sp\FixtureDumper\Tests\Generator\Nelmio;
+namespace Sp\FixtureDumper\Tests\Generator\Alice;
 
 use Sp\FixtureDumper\Generator\DefaultNamingStrategy;
 use Sp\FixtureDumper\Tests\Generator\AbstractGeneratorTest;
-use Sp\FixtureDumper\Generator\Nelmio\YamlFixtureGenerator;
+use Sp\FixtureDumper\Generator\Alice\YamlFixtureGenerator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>

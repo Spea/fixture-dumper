@@ -1,16 +1,16 @@
 <?php
 
-namespace Sp\FixtureDumper\Generator\Nelmio;
+namespace Sp\FixtureDumper\Generator\Alice;
 
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Sp\FixtureDumper\Converter\Nelmio\YamlVisitor;
-use Sp\FixtureDumper\Generator\NelmioGenerator;
+use Sp\FixtureDumper\Converter\Alice\YamlVisitor;
+use Sp\FixtureDumper\Generator\AliceGenerator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class YamlFixtureGenerator extends NelmioGenerator
+class YamlFixtureGenerator extends AliceGenerator
 {
 
     /**
