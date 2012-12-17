@@ -51,6 +51,13 @@ abstract class AbstractGenerator
         $this->visitor = $visitor ?: $this->getDefaultVisitor();
     }
 
+    /**
+     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
+     * @param array                                              $models
+     * @param array                                              $options
+     *
+     * @return mixed
+     */
     public function generate(ClassMetadata $metadata, array $models = null, array $options = array())
     {
         $resolver = new OptionsResolver();
@@ -62,6 +69,7 @@ abstract class AbstractGenerator
 
         $preparedData = array();
         foreach ($models as $model) {
+            $data = array();
             $data['fields'] = $this->processFieldNames($metadata, $model);
             $data['associations'] = $this->processAssociationNames($metadata, $model);
 
@@ -71,6 +79,12 @@ abstract class AbstractGenerator
         return $this->doGenerate($metadata, $preparedData, $options);
     }
 
+    /**
+     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
+     * @param                                                    $model
+     *
+     * @return array
+     */
     protected function processFieldNames(ClassMetadata $metadata, $model)
     {
         $data = array();
@@ -85,6 +99,12 @@ abstract class AbstractGenerator
         return $data;
     }
 
+    /**
+     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
+     * @param                                                    $model
+     *
+     * @return array
+     */
     protected function processAssociationNames(ClassMetadata $metadata, $model)
     {
         $data = array();
@@ -222,8 +242,9 @@ abstract class AbstractGenerator
         return new DefaultVisitor();
     }
 
+
     /**
-     * @return \Sp\FixtureDumper\Converter\VisitorInterface
+     * @return DefaultNamingStrategy
      */
     protected function getDefaultNamingStrategy()
     {

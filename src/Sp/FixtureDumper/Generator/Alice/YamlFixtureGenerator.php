@@ -5,12 +5,12 @@ namespace Sp\FixtureDumper\Generator\Alice;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Sp\FixtureDumper\Converter\Alice\YamlVisitor;
-use Sp\FixtureDumper\Generator\AliceGenerator;
+use Sp\FixtureDumper\Generator\AbstractAliceGenerator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class YamlFixtureGenerator extends AliceGenerator
+class YamlFixtureGenerator extends AbstractAliceGenerator
 {
 
     /**

@@ -5,12 +5,12 @@ namespace Sp\FixtureDumper\Generator\Alice;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use CG\Generator\Writer;
 use Sp\FixtureDumper\Converter\Alice\ArrayVisitor;
-use Sp\FixtureDumper\Generator\AliceGenerator;
+use Sp\FixtureDumper\Generator\AbstractAliceGenerator;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class ArrayFixtureGenerator extends AliceGenerator
+class ArrayFixtureGenerator extends AbstractAliceGenerator
 {
     /**
      * @var \CG\Generator\Writer

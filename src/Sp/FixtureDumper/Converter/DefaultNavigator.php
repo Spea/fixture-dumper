@@ -19,6 +19,10 @@ class DefaultNavigator
      */
     protected $format;
 
+    /**
+     * @param Handler\HandlerRegistryInterface $handlerRegistry
+     * @param                                  $format
+     */
     public function __construct(HandlerRegistryInterface $handlerRegistry, $format)
     {
         $this->handlerRegistry = $handlerRegistry;
@@ -27,7 +31,7 @@ class DefaultNavigator
 
     /**
      * @param VisitorInterface $visitor
-     * @param  mixed           $value
+     * @param mixed            $value
      * @param null|string      $type
      *
      * @return string
