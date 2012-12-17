@@ -128,13 +128,20 @@ class ClassFixtureGenerator extends AbstractGenerator
         $class->setMethod($method);
     }
 
-
     /**
      * {@inheritdoc}
      */
     protected function getDefaultVisitor()
     {
         return new PhpVisitor();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultNamingStrategy()
+    {
+        return new ClassNamingStrategy();
     }
 
     /**

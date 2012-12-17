@@ -44,11 +44,11 @@ abstract class AbstractGenerator
      * @param NamingStrategy                               $namingStrategy
      * @param \Sp\FixtureDumper\Converter\VisitorInterface $visitor
      */
-    public function __construct(ObjectManager $manager, NamingStrategy $namingStrategy, VisitorInterface $visitor = null)
+    public function __construct(ObjectManager $manager, NamingStrategy $namingStrategy = null, VisitorInterface $visitor = null)
     {
         $this->manager = $manager;
-        $this->namingStrategy = $namingStrategy;
-        $this->visitor = $visitor;
+        $this->namingStrategy = $namingStrategy ?: $this->getDefaultNamingStrategy();
+        $this->visitor = $visitor ?: $this->getDefaultVisitor();
     }
 
     public function generate(ClassMetadata $metadata, array $models = null, array $options = array())
@@ -124,10 +124,6 @@ abstract class AbstractGenerator
      */
     public function getVisitor()
     {
-        if (null === $this->visitor) {
-            $this->visitor = $this->getDefaultVisitor();
-        }
-
         return $this->visitor;
     }
 
@@ -224,6 +220,14 @@ abstract class AbstractGenerator
     protected function getDefaultVisitor()
     {
         return new DefaultVisitor();
+    }
+
+    /**
+     * @return \Sp\FixtureDumper\Converter\VisitorInterface
+     */
+    protected function getDefaultNamingStrategy()
+    {
+        return new DefaultNamingStrategy();
     }
 
     /**
