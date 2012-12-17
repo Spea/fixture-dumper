@@ -13,6 +13,8 @@ use Sp\FixtureDumper\Converter\Handler\HandlerRegistryInterface;
 use Sp\FixtureDumper\Converter\DefaultNavigator;
 
 /**
+ * General class for dumping fixtures.
+ *
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
 abstract class Dumper
@@ -63,16 +65,17 @@ abstract class Dumper
         $fixtures = array();
         foreach ($metadata as $data) {
             $fixture = $generator->generate($data, $models, $options);
-            $fileName = $generator->createFileName($data, false);
-            if ($this->getDumpMultipleFiles()) {
+            if ($this->dumpMultipleFiles) {
                 $fileName = $generator->createFileName($data, true);
                 $this->writeFixture($generator, $fixture, $path, $fileName);
+            } else {
+                $fileName = $generator->createFileName($data, false);
             }
 
             $fixtures[] = $fixture;
         }
 
-        if (!$this->getDumpMultipleFiles() && count($fixtures) != 0) {
+        if (!$this->dumpMultipleFiles && count($fixtures) != 0) {
             $fixture = implode("\n\n", $fixtures);
 
             $this->writeFixture($generator, $fixture, $path, $fileName);
