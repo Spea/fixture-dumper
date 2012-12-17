@@ -20,6 +20,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
  */
 abstract class AbstractAliceGenerator extends AbstractGenerator
 {
+
     /**
      * {@inheritdoc}
      */

@@ -240,7 +240,6 @@ abstract class AbstractGenerator
      */
     abstract protected function doGenerate(ClassMetadata $metadata, array $data, array $options = array());
 
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
