@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the fixture dumper library.
+ * This file is part of the FixtureDumper library.
  *
  * (c) Martin Parsiegla <martin.parsiegla@gmail.com>
  *

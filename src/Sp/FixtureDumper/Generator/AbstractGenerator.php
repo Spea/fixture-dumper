@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the FixtureDumper library.
+ *
+ * (c) Martin Parsiegla <martin.parsiegla@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sp\FixtureDumper\Generator;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
@@ -10,6 +19,8 @@ use Sp\FixtureDumper\Converter\VisitorInterface;
 use Sp\FixtureDumper\Converter\DefaultVisitor;
 
 /**
+ * Base class for generating fixtures.
+ *
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
 abstract class AbstractGenerator
@@ -51,12 +62,13 @@ abstract class AbstractGenerator
         $this->visitor = $visitor ?: $this->getDefaultVisitor();
     }
 
+
     /**
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
      * @param array                                              $models
      * @param array                                              $options
      *
-     * @return mixed
+     * @return string
      */
     public function generate(ClassMetadata $metadata, array $models = null, array $options = array())
     {
@@ -224,9 +236,10 @@ abstract class AbstractGenerator
      * @param array                                              $data
      * @param array                                              $options
      *
-     * @return mixed
+     * @return string
      */
     abstract protected function doGenerate(ClassMetadata $metadata, array $data, array $options = array());
+
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

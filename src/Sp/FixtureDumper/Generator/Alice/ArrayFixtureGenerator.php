@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the FixtureDumper library.
+ *
+ * (c) Martin Parsiegla <martin.parsiegla@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sp\FixtureDumper\Generator\Alice;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
@@ -29,6 +38,30 @@ class ArrayFixtureGenerator extends AbstractAliceGenerator
         return 'fixtures.php';
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function prepareForWrite($fixture)
+    {
+        $writer = new Writer();
+        $writer->writeln("<?php\n");
+
+        $writer
+            ->writeln('/**')
+            ->writeln(' * This code was generated automatically by the FixtureDumper library, manual changes to it')
+            ->writeln(' * may be lost upon next generation.')
+            ->writeln(' */');
+
+        $writer->writeln("\$fixtures = array();");
+        $writer->writeln($fixture. "\n");
+        $writer->writeln("return \$fixtures;");
+
+        return $writer->getContent();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function prepareData(ClassMetadata $metadata, array $data)
     {
         $writer = new Writer();
@@ -57,6 +90,13 @@ class ArrayFixtureGenerator extends AbstractAliceGenerator
         return $writer->getContent();
     }
 
+    /**
+     * Converts a value to its php representation.
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
     protected function convertValue($value)
     {
         if (!is_array($value)) {
@@ -75,28 +115,11 @@ class ArrayFixtureGenerator extends AbstractAliceGenerator
         return $result;
     }
 
-    public function prepareForWrite($fixture)
-    {
-        $writer = new Writer();
-        $writer->writeln("<?php\n");
-
-        $writer
-            ->writeln('/**')
-            ->writeln(' * This code was generated automatically by the FixtureDumper library, manual changes to it')
-            ->writeln(' * may be lost upon next generation.')
-            ->writeln(' */');
-
-        $writer->writeln("\$fixtures = array();");
-        $writer->writeln($fixture. "\n");
-        $writer->writeln("return \$fixtures;");
-
-        return $writer->getContent();
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     protected function getDefaultVisitor()
     {
         return new ArrayVisitor();
     }
-
-
 }

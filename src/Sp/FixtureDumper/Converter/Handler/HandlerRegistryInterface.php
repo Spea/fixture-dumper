@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the FixtureDumper library.
+ *
+ * (c) Martin Parsiegla <martin.parsiegla@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sp\FixtureDumper\Converter\Handler;
 
 /**
@@ -8,14 +17,16 @@ namespace Sp\FixtureDumper\Converter\Handler;
 interface HandlerRegistryInterface
 {
     /**
-     * @param ConverterSubscriberInterface $handler
+     * Add a subscribing handler to the registry.
+     *
+     * @param HandlerSubscriberInterface $handler
      *
      * @return void
      */
     public function addSubscribingHandler(HandlerSubscriberInterface $handler);
 
     /**
-     * Registers a handler in the registry.
+     * Adds a handler in the registry.
      *
      * @param string $type
      * @param string $format
@@ -26,6 +37,8 @@ interface HandlerRegistryInterface
     public function addHandler($type, $format, $handler);
 
     /**
+     * Returns the the handler for the given type and format.
+     *
      * @param string $type
      * @param string $format
      *

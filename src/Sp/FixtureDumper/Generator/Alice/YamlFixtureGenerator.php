@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the FixtureDumper library.
+ *
+ * (c) Martin Parsiegla <martin.parsiegla@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Sp\FixtureDumper\Generator\Alice;
 
 use Symfony\Component\Yaml\Yaml;
@@ -25,6 +34,9 @@ class YamlFixtureGenerator extends AbstractAliceGenerator
         return 'fixtures.yml';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function prepareData(ClassMetadata $metadata, array $data)
     {
         $yaml = new Yaml();
@@ -32,6 +44,9 @@ class YamlFixtureGenerator extends AbstractAliceGenerator
         return $yaml->dump(array($metadata->getName() => $data), 3);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function getDefaultVisitor()
     {
         return new YamlVisitor();
