@@ -56,7 +56,12 @@ abstract class Dumper
         $this->dumpMultipleFiles = true;
     }
 
-    public function dump($path, $format, array $models = null, array $options = array())
+    /**
+     * @param       $path
+     * @param       $format
+     * @param array $options
+     */
+    public function dump($path, $format, array $options = array())
     {
         $metadata = $this->getDumpOrder($this->getAllMetadata());
         $generator = $this->generators->get($format)->get();
@@ -64,7 +69,7 @@ abstract class Dumper
 
         $fixtures = array();
         foreach ($metadata as $data) {
-            $fixture = $generator->generate($data, $models, $options);
+            $fixture = $generator->generate($data, null, $options);
             if ($this->dumpMultipleFiles) {
                 $fileName = $generator->createFileName($data, true);
                 $this->writeFixture($generator, $fixture, $path, $fileName);
