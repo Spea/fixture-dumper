@@ -4,6 +4,8 @@ This library aims to provide a simple way to dump fixtures for the Doctrine ORM/
 
 **Note:** This library is still in an early stage.
 
+https://api.travis-ci.org/Spea/fixture-dumper.png?branch=master
+
 ## Installation ##
 
 This is installable via [Composer](https://getcomposer.org/) as [sp/fixture-dumper](https://packagist.org/packages/sp/fixture-dumper).
