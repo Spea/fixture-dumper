@@ -20,6 +20,7 @@ use CG\Core\DefaultGeneratorStrategy;
 use CG\Generator\PhpMethod;
 use CG\Generator\PhpParameter;
 use Sp\FixtureDumper\Converter\PhpVisitor;
+use Symfony\Component\Form\Util\FormUtil;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -38,6 +39,9 @@ class ClassFixtureGenerator extends AbstractGenerator
         return 'Fixtures.php';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function prepareForWrite($fixture)
     {
         return "<?php\n\n". $fixture;
@@ -104,13 +108,34 @@ class ClassFixtureGenerator extends AbstractGenerator
         }
 
         foreach ($modelData['associations'] as $assocName => $reference) {
-            $setter = sprintf('set%s', ucfirst($assocName));
-            $reference = sprintf("\$this->getReference('%s')", $reference);
-            $writer->writeln(sprintf("$%s->%s(%s);", $modelName, $setter, $reference));
+            $this->writeReference($metadata, $modelName, $assocName, $reference, $writer);
         }
 
         $writer->writeln(sprintf('$manager->persist($%s);', $modelName));
         $writer->writeln(sprintf('$this->addReference(\'%1$s\', $%1$s);', $modelName));
+    }
+
+    protected function writeReference(ClassMetadata $metadata, $modelName, $assocName, $reference, Writer $writer)
+    {
+        $setter = sprintf('set%s', ucfirst($assocName));
+        if ($metadata->isSingleValuedAssociation($assocName)) {
+            $reference = sprintf("\$this->getReference('%s')", $reference);
+            $writer->writeln(sprintf("$%s->%s(%s);", $modelName, $setter, $reference));
+        } else {
+            $class = $metadata->getName();
+            if ($adder = $this->findAdderMethod(new $class(), ucfirst($assocName))) {
+                foreach ($reference as $ref) {
+                    $refString = sprintf("\$this->getReference('%s')", $ref);
+                    $writer->writeln(sprintf("$%s->%s(%s);", $modelName, $adder, $refString));
+                }
+            } else {
+                $result = array();
+                foreach ($reference as $key => $ref) {
+                    $result[] = sprintf("\$this->getReference('%s')", $ref);
+                }
+                $writer->writeln(sprintf("$%s->%s(array(%s));", $modelName, $setter, implode(', ', $result)));
+            }
+        }
     }
 
     protected function addDependentFixtureInterface(PhpClass $class, ClassMetadata $metadata, array $options)
@@ -159,5 +184,37 @@ class ClassFixtureGenerator extends AbstractGenerator
     protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(array('namespace'));
+    }
+
+    /**
+     * Finds an adder method for the given object.
+     * Thanks to the alice library for this code snippet.
+     *
+     * @param mixed $obj
+     * @param string $key
+     *
+     * @return string
+     */
+    private function findAdderMethod($obj, $key)
+    {
+        if (method_exists($obj, $method = 'add'.$key)) {
+            return $method;
+        }
+
+        if (class_exists('Symfony\Component\Form\Util\FormUtil') && method_exists('Symfony\Component\Form\Util\FormUtil', 'singularify')) {
+            foreach ((array) FormUtil::singularify($key) as $singularForm) {
+                if (method_exists($obj, $method = 'add'.$singularForm)) {
+                    return $method;
+                }
+            }
+        }
+
+        if (method_exists($obj, $method = 'add'.rtrim($key, 's'))) {
+            return $method;
+        }
+
+        if (substr($key, -3) === 'ies' && method_exists($obj, $method = 'add'.substr($key, 0, -3).'y')) {
+            return $method;
+        }
     }
 }

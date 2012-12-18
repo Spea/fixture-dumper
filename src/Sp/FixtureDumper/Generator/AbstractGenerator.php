@@ -133,7 +133,7 @@ abstract class AbstractGenerator
             } else {
                 $data[$assocName] = array();
                 foreach ($propertyValue as $value) {
-                    $assocValue = $this->namingStrategy->modelName($propertyValue, $this->manager->getClassMetadata(get_class($value)));
+                    $assocValue = $this->namingStrategy->modelName($value, $this->manager->getClassMetadata(get_class($value)));
                     $assocValue = $this->navigator->accept($this->getVisitor(), $assocValue, 'reference');
                     $data[$assocName][] = $assocValue;
                 }
