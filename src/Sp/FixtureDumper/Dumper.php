@@ -11,13 +11,10 @@
 
 namespace Sp\FixtureDumper;
 
-use Doctrine\Common\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sp\FixtureDumper\Generator\AbstractGenerator;
-use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Symfony\Component\Filesystem\Filesystem;
 use PhpCollection\MapInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Sp\FixtureDumper\Converter\Handler\HandlerRegistryInterface;
 use Sp\FixtureDumper\Converter\DefaultNavigator;
 

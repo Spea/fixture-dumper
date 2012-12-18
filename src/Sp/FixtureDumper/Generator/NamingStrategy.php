@@ -25,7 +25,7 @@ interface NamingStrategy
      *
      * @return string A class name for the fixture
      */
-    function fixtureName(ClassMetadata $metadata);
+    public function fixtureName(ClassMetadata $metadata);
 
     /**
      * Returns a name for the given model
@@ -35,5 +35,5 @@ interface NamingStrategy
      *
      * @return string
      */
-    function modelName($model, ClassMetadata $metadata);
+    public function modelName($model, ClassMetadata $metadata);
 }

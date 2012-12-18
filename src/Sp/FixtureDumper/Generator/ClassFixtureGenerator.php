@@ -190,7 +190,7 @@ class ClassFixtureGenerator extends AbstractGenerator
      * Finds an adder method for the given object.
      * Thanks to the alice library for this code snippet.
      *
-     * @param mixed $obj
+     * @param mixed  $obj
      * @param string $key
      *
      * @return string

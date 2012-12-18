@@ -28,8 +28,8 @@ interface HandlerRegistryInterface
     /**
      * Adds a handler in the registry.
      *
-     * @param string $type
-     * @param string $format
+     * @param string   $type
+     * @param string   $format
      * @param callable $handler function(VisitorInterface, mixed $data, array $type): mixed
      *
      * @return void

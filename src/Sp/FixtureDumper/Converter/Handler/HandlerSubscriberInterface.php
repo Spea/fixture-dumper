@@ -19,5 +19,5 @@ interface HandlerSubscriberInterface
     /**
      * @return array
      */
-    function getSubscribedMethods();
+    public function getSubscribedMethods();
 }

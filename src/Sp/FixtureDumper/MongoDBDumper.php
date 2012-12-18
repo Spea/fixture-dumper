@@ -83,7 +83,7 @@ class MongoDBDumper extends Dumper
             $calc->addDependency($targetClass, $class);
 
             // If the target class has mapped subclasses, these share the same dependency.
-            if ( ! $targetClass->subClasses) {
+            if (! $targetClass->subClasses) {
                 continue;
             }
 

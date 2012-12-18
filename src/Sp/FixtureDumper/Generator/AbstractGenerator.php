@@ -62,7 +62,6 @@ abstract class AbstractGenerator
         $this->visitor = $visitor ?: $this->getDefaultVisitor();
     }
 
-
     /**
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
      * @param array                                              $models
@@ -253,7 +252,6 @@ abstract class AbstractGenerator
     {
         return new DefaultVisitor();
     }
-
 
     /**
      * @return DefaultNamingStrategy
