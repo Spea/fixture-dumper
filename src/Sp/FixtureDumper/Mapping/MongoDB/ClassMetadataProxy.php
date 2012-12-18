@@ -13,6 +13,7 @@ namespace Sp\FixtureDumper\Mapping\MongoDB;
 
 use InvalidArgumentException;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use \Doctrine\ODM\MongoDB\Mapping\ClassMetadata as BaseClassMetadata;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -30,7 +31,7 @@ class ClassMetadataProxy implements ClassMetadata
     public $origFieldMappings;
 
     /**
-     * @var \Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo
+     * @var \Doctrine\ODM\MongoDB\Mapping\ClassMetadata
      */
     protected $classMetadata;
 
@@ -50,9 +51,9 @@ class ClassMetadataProxy implements ClassMetadata
     protected $associationMappings = array();
 
     /**
-     * @param \Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo $classMetadata
+     * @param \Doctrine\ODM\MongoDB\Mapping\ClassMetadata $classMetadata
      */
-    public function __construct(ClassMetadata $classMetadata)
+    public function __construct(BaseClassMetadata $classMetadata)
     {
         $this->name = $classMetadata->name;
         $this->origFieldMappings = $classMetadata->fieldMappings;
@@ -97,7 +98,7 @@ class ClassMetadataProxy implements ClassMetadata
      * Initialize the mappings from the class metadata.
      * The mapping will be split in field mappings and association mappings.
      *
-     * @return MongoODMClassMetadataProxy
+     * @return \Sp\FixtureDumper\Mapping\MongoDB\ClassMetadataProxy
      */
     protected function initMappings()
     {

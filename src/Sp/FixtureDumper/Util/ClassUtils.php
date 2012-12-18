@@ -16,7 +16,7 @@ use InvalidArgumentException;
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class ClassUtils
+final class ClassUtils
 {
     private function __construct()
     {}

@@ -17,7 +17,7 @@ use Sp\FixtureDumper\Mapping\MongoDB\ClassMetadataProxy;
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class MongoDBDumper extends Dumper
+class MongoDBDumper extends AbstractDumper
 {
     /**
      * {@inheritdoc}
@@ -87,6 +87,7 @@ class MongoDBDumper extends Dumper
                 continue;
             }
 
+            $newNodes = array();
             foreach ($targetClass->subClasses as $subClassName) {
                 $targetSubClass = $this->dm->getClassMetadata($subClassName);
 

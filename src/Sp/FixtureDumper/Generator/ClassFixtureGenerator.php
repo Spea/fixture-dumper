@@ -145,7 +145,6 @@ class ClassFixtureGenerator extends AbstractGenerator
         $method = PhpMethod::create('getDependencies');
 
         $writer->writeln("return array(");
-        $assocCount = count($metadata->getAssociationNames());
         $associations = array();
         foreach ($metadata->getAssociationNames() as $assocName) {
             $targetClass = $metadata->getAssociationTargetClass($assocName);
@@ -193,7 +192,7 @@ class ClassFixtureGenerator extends AbstractGenerator
      * @param mixed  $obj
      * @param string $key
      *
-     * @return string
+     * @return string|null
      */
     private function findAdderMethod($obj, $key)
     {

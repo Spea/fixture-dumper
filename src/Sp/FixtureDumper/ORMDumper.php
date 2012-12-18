@@ -16,7 +16,7 @@ use Doctrine\ORM\Internal\CommitOrderCalculator;
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class ORMDumper extends Dumper
+class ORMDumper extends AbstractDumper
 {
     protected function getDumpOrder(array $classes)
     {

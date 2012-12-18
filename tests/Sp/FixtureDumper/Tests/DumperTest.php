@@ -49,7 +49,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $this->manager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->generator = $this->getMockBuilder('Sp\FixtureDumper\Generator\AbstractGenerator')->disableOriginalConstructor()->setMethods(array('generate', 'setNavigator'))->getMockForAbstractClass();
         $this->handlerRegistry = $this->getMock('Sp\FixtureDumper\Converter\Handler\HandlerRegistryInterface');
-        $this->dumper = $this->getMockForAbstractClass('Sp\FixtureDumper\Dumper', array($this->manager, $this->handlerRegistry, new Map(array('php' => $this->generator))), '', true, true, true, array('writeFixture', 'getAllMetadata'));
+        $this->dumper = $this->getMockForAbstractClass('Sp\FixtureDumper\AbstractDumper', array($this->manager, $this->handlerRegistry, new Map(array('php' => $this->generator))), '', true, true, true, array('writeFixture', 'getAllMetadata'));
 
         $this->dumper->expects($this->once())->method('getAllMetadata')->will($this->returnValue($this->metadata));
         $this->dumper->expects($this->once())->method('getDumpOrder')->will($this->returnValue($this->metadata));

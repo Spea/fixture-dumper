@@ -40,7 +40,7 @@ $dumper->dump('/your/workspace/src/Acme/DemoBundle/DataFixtures/ORM', 'array');
 
 #### Options
 
-`Dumper#dump` accepts a third `$options` argument that is an array
+`AbstractDumper#dump` accepts a third `$options` argument that is an array
 with the following keys:
 
 - namespace: The namespace for the generated class to use

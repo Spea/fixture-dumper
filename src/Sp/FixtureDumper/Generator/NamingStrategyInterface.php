@@ -16,7 +16,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-interface NamingStrategy
+interface NamingStrategyInterface
 {
     /**
      * Return a fixture class name for the given model class name.

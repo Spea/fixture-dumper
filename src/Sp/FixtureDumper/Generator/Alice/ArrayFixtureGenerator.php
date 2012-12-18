@@ -95,7 +95,7 @@ class ArrayFixtureGenerator extends AbstractAliceGenerator
      *
      * @param mixed $value
      *
-     * @return string
+     * @return object|integer|double|string|null|boolean
      */
     protected function convertValue($value)
     {

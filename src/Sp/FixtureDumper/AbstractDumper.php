@@ -23,12 +23,13 @@ use Sp\FixtureDumper\Converter\DefaultNavigator;
  *
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-abstract class Dumper
+abstract class AbstractDumper
 {
+
     /**
-     * @var Generator\AbstractGenerator
+     * @var \PhpCollection\MapInterface
      */
-    protected $generator;
+    protected $generators;
 
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
@@ -104,7 +105,7 @@ abstract class Dumper
     /**
      * @return bool
      */
-    public function getDumpMultipleFiles()
+    public function shouldDumpMultipleFiles()
     {
         return $this->dumpMultipleFiles;
     }

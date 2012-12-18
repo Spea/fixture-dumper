@@ -17,7 +17,7 @@ use Sp\FixtureDumper\Util\ClassUtils;
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
  */
-class DefaultNamingStrategy implements NamingStrategy
+class DefaultNamingStrategy implements NamingStrategyInterface
 {
     /**
      * {@inheritdoc}

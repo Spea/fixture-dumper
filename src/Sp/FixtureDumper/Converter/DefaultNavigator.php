@@ -43,7 +43,7 @@ class DefaultNavigator
      * @param mixed            $value
      * @param null|string      $type
      *
-     * @return string
+     * @return mixed
      */
     public function accept(VisitorInterface $visitor, $value, $type = null)
     {

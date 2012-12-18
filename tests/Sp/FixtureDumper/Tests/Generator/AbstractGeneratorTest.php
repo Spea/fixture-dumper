@@ -70,7 +70,7 @@ abstract class AbstractGeneratorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->namingStrategy = $this->getMock('Sp\FixtureDumper\Generator\NamingStrategy');
+        $this->namingStrategy = $this->getMock('Sp\FixtureDumper\Generator\NamingStrategyInterface');
         $this->manager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->metadata = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');

@@ -26,7 +26,7 @@ use Sp\FixtureDumper\Converter\DefaultVisitor;
 abstract class AbstractGenerator
 {
     /**
-     * @var NamingStrategy
+     * @var NamingStrategyInterface
      */
     protected $namingStrategy;
 
@@ -50,12 +50,13 @@ abstract class AbstractGenerator
      */
     protected $models;
 
+
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager   $manager
-     * @param NamingStrategy                               $namingStrategy
-     * @param \Sp\FixtureDumper\Converter\VisitorInterface $visitor
+     * @param \Doctrine\Common\Persistence\ObjectManager        $manager
+     * @param NamingStrategyInterface|null                      $namingStrategy
+     * @param \Sp\FixtureDumper\Converter\VisitorInterface|null $visitor
      */
-    public function __construct(ObjectManager $manager, NamingStrategy $namingStrategy = null, VisitorInterface $visitor = null)
+    public function __construct(ObjectManager $manager, NamingStrategyInterface $namingStrategy = null, VisitorInterface $visitor = null)
     {
         $this->manager = $manager;
         $this->namingStrategy = $namingStrategy ?: $this->getDefaultNamingStrategy();
@@ -64,7 +65,7 @@ abstract class AbstractGenerator
 
     /**
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
-     * @param array                                              $models
+     * @param array|null                                         $models
      * @param array                                              $options
      *
      * @return string
@@ -191,7 +192,7 @@ abstract class AbstractGenerator
     }
 
     /**
-     * @param \Sp\FixtureDumper\Generator\NamingStrategy $namingStrategy
+     * @param \Sp\FixtureDumper\Generator\NamingStrategyInterface $namingStrategy
      */
     public function setNamingStrategy($namingStrategy)
     {
@@ -199,7 +200,7 @@ abstract class AbstractGenerator
     }
 
     /**
-     * @return \Sp\FixtureDumper\Generator\NamingStrategy
+     * @return \Sp\FixtureDumper\Generator\NamingStrategyInterface
      */
     public function getNamingStrategy()
     {
