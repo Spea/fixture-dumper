@@ -18,8 +18,20 @@ use Sp\FixtureDumper\Converter\DefaultVisitor;
  */
 class YamlVisitor extends DefaultVisitor
 {
+    /**
+     * {@inheritdoc}
+     */
     public function visitReference($reference)
     {
         return '@'. parent::visitReference($reference);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function visitObject($object)
+    {
+        // TODO: Find a nice way to handle objects in yaml files.
+        return null;
     }
 }

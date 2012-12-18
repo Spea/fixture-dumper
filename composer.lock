@@ -3,32 +3,32 @@
     "packages": [
         {
             "name": "doctrine/common",
-            "version": "2.3.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common",
-                "reference": "bb0aebbf234db52df476a2b473d434745b34221c"
+                "reference": "a890fe1b689ed65c52bf4a7e64333a27b3c400d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/common/archive/bb0aebbf234db52df476a2b473d434745b34221c.zip",
-                "reference": "bb0aebbf234db52df476a2b473d434745b34221c",
+                "url": "https://github.com/doctrine/common/archive/a890fe1b689ed65c52bf4a7e64333a27b3c400d6.zip",
+                "reference": "a890fe1b689ed65c52bf4a7e64333a27b3c400d6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2012-09-20 05:55:18",
+            "time": "2012-12-18 00:45:03",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3.x-dev"
+                    "dev-master": "2.4.x-dev"
                 }
             },
             "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "Doctrine\\Common": "lib/"
+                    "Doctrine\\Common\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -57,7 +57,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -170,12 +170,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/schmittjoh/php-collection",
-                "reference": "e0f5d0ee4cb6708185bd045ce70faf93dc460db6"
+                "reference": "0.10.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/schmittjoh/php-collection/archive/e0f5d0ee4cb6708185bd045ce70faf93dc460db6.zip",
-                "reference": "e0f5d0ee4cb6708185bd045ce70faf93dc460db6",
+                "url": "https://github.com/schmittjoh/php-collection/archive/0.10.0.zip",
+                "reference": "0.10.0",
                 "shasum": ""
             },
             "require": {
@@ -202,7 +202,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
