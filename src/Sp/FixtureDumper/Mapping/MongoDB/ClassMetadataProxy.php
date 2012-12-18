@@ -98,7 +98,7 @@ class ClassMetadataProxy implements ClassMetadata
      * Initialize the mappings from the class metadata.
      * The mapping will be split in field mappings and association mappings.
      *
-     * @return \Sp\FixtureDumper\Mapping\MongoDB\ClassMetadataProxy
+     * @return ClassMetadataProxy
      */
     protected function initMappings()
     {
