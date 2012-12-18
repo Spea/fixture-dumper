@@ -64,7 +64,6 @@ class DefaultVisitor implements VisitorInterface
         return $reference;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -74,12 +73,10 @@ class DefaultVisitor implements VisitorInterface
     }
 
     /**
-     * @param null $data
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function visitNull($data)
     {
-        return 'null';
+        return null;
     }
 }

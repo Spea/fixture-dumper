@@ -33,12 +33,18 @@ class PhpVisitor extends DefaultVisitor
     }
 
     /**
-     * @param array $object
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function visitObject($object)
     {
         return sprintf("unserialize('%s')", serialize($object));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function visitNull($data)
+    {
+        return 'null';
     }
 }
