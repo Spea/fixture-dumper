@@ -72,4 +72,14 @@ class DefaultVisitor implements VisitorInterface
     {
         return sprintf("unserialize('%s')", serialize($object));
     }
+
+    /**
+     * @param null $data
+     *
+     * @return string
+     */
+    public function visitNull($data)
+    {
+        return 'null';
+    }
 }

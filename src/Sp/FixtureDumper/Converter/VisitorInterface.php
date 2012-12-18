@@ -17,6 +17,12 @@ namespace Sp\FixtureDumper\Converter;
 interface VisitorInterface
 {
     /**
+     * @param null $data
+     *
+     * @return string
+     */
+    public function visitNull($data);
+    /**
      * @param string $string
      *
      * @return string

@@ -55,6 +55,8 @@ class DefaultNavigator
         }
 
         switch ($type) {
+            case 'NULL':
+                return $visitor->visitNull($value);
             case 'string':
                 return $visitor->visitString($value);
             case 'integer':
