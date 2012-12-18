@@ -103,7 +103,7 @@ class ClassMetadataProxy implements ClassMetadata
     protected function initMappings()
     {
         if ($this->initialized) {
-            return;
+            return $this;
         }
 
         foreach ($this->classMetadata->fieldMappings as $key => $mapping) {

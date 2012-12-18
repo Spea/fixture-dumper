@@ -89,7 +89,7 @@ class MongoDBDumper extends AbstractDumper
 
             $newNodes = array();
             foreach ($targetClass->subClasses as $subClassName) {
-                $targetSubClass = $this->dm->getClassMetadata($subClassName);
+                $targetSubClass = $this->objectManager->getClassMetadata($subClassName);
 
                 if ( ! $calc->hasClass($subClassName)) {
                     $calc->addClass($targetSubClass);
