@@ -21,15 +21,17 @@
         "symfony/options-resolver": ">=2.1",
         "symfony/filesystem": ">=2.1",
         "phpcollection/phpcollection": "0.1.*",
-        "jms/cg": "1.0.0",
-        "doctrine/data-fixtures": "*"
+        "jms/cg": "1.0.0"
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "doctrine/orm": ">=2.2,<2.5-dev",
-        "phpunit/phpunit": "3.7.*"
+        "symfony/yaml": ">=2.1",
+        "phpunit/phpunit": "3.7.*",
+        "doctrine/data-fixtures": "*"
     },
     "suggest": {
+        "doctrine/data-fixtures": "For loading fixtures",
+        "nelmio/alice": "To load fixtures in yml or array format",
         "symfony/yaml": "If you want to dump fixtures in yml format",
         "doctrine/orm": "For dumping ORM fixtures",
         "doctrine/mongodb-odm": "For dumping MongoDB ODM fixtures",
@@ -40,5 +42,10 @@
     },
     "autoload": {
         "psr-0": { "Sp\\FixtureDumper": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
     }
 }
