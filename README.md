@@ -22,13 +22,13 @@ $registry = new \Sp\FixtureDumper\Converter\Handler\HandlerRegistry();
 $registry->addSubscribingHandler(new \Sp\FixtureDumper\Converter\Handler\DateHandler());
 
 // for creating fixtures classes
-$generator = new \Sp\FixtureDumper\Generator\ClassFixtureGenerator($manager);
+$generator = new \Sp\FixtureDumper\Generator\ClassFixtureGenerator();
 
 // for creating yml files which can be loaded with the alice fixtures library
-$ymlGenerator = new \Sp\FixtureDumper\Generator\Alice\YamlFixtureGenerator($manager);
+$ymlGenerator = new \Sp\FixtureDumper\Generator\Alice\YamlFixtureGenerator();
 
 // for creating array files which can be loaded with the alice fixtures library
-$arrayGenerator = new \Sp\FixtureDumper\Generator\Alice\ArrayFixtureGenerator($manager);
+$arrayGenerator = new \Sp\FixtureDumper\Generator\Alice\ArrayFixtureGenerator();
 
 $generatorMap = new \PhpCollection\Map(array('php' => $generator, 'yml' => $ymlGenerator, 'array' => $arrayGenerator);
 $dumper = new \Sp\FixtureDumper\ORMDumper($manager, $registry, $generatorMap));
