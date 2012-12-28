@@ -52,11 +52,11 @@ abstract class AbstractGenerator
 
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager        $manager
+     * @param \Doctrine\Common\Persistence\ObjectManager|null   $manager
      * @param NamingStrategyInterface|null                      $namingStrategy
      * @param \Sp\FixtureDumper\Converter\VisitorInterface|null $visitor
      */
-    public function __construct(ObjectManager $manager, NamingStrategyInterface $namingStrategy = null, VisitorInterface $visitor = null)
+    public function __construct(ObjectManager $manager = null, NamingStrategyInterface $namingStrategy = null, VisitorInterface $visitor = null)
     {
         $this->manager = $manager;
         $this->namingStrategy = $namingStrategy ?: $this->getDefaultNamingStrategy();
@@ -89,58 +89,6 @@ abstract class AbstractGenerator
         }
 
         return $this->doGenerate($metadata, $preparedData, $options);
-    }
-
-    /**
-     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
-     * @param                                                    $model
-     *
-     * @return array
-     */
-    protected function processFieldNames(ClassMetadata $metadata, $model)
-    {
-        $data = array();
-        foreach ($metadata->getFieldNames() as $fieldName) {
-            if ($metadata->isIdentifier($fieldName)) {
-                continue;
-            }
-
-            $data[$fieldName] = $this->navigator->accept($this->getVisitor(), $this->readProperty($model, $fieldName));
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
-     * @param                                                    $model
-     *
-     * @return array
-     */
-    protected function processAssociationNames(ClassMetadata $metadata, $model)
-    {
-        $data = array();
-        foreach ($metadata->getAssociationNames() as $assocName) {
-            $propertyValue = $this->readProperty($model, $assocName);
-            if (null === $propertyValue || $metadata->isAssociationInverseSide($assocName)) {
-                continue;
-            }
-
-            if ($metadata->isSingleValuedAssociation($assocName)) {
-                $assocValue = $this->namingStrategy->modelName($propertyValue, $this->manager->getClassMetadata(get_class($propertyValue)));
-                $assocValue = $this->navigator->accept($this->getVisitor(), $assocValue, 'reference');
-                $data[$assocName] = $assocValue;
-            } else {
-                $data[$assocName] = array();
-                foreach ($propertyValue as $value) {
-                    $assocValue = $this->namingStrategy->modelName($value, $this->manager->getClassMetadata(get_class($value)));
-                    $assocValue = $this->navigator->accept($this->getVisitor(), $assocValue, 'reference');
-                    $data[$assocName][] = $assocValue;
-                }
-            }
-        }
-
-        return $data;
     }
 
     /**
@@ -184,10 +132,15 @@ abstract class AbstractGenerator
     }
 
     /**
+     * @throws \RuntimeException
      * @return \Doctrine\Common\Persistence\ObjectManager
      */
     public function getManager()
     {
+        if (null === $this->manager) {
+            throw new \RuntimeException(sprintf('No manager was configured for the class "%s%, use "%s" to set one.', __CLASS__, 'setManager'));
+        }
+
         return $this->manager;
     }
 
@@ -241,6 +194,58 @@ abstract class AbstractGenerator
     abstract protected function doGenerate(ClassMetadata $metadata, array $data, array $options = array());
 
     /**
+     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
+     * @param                                                    $model
+     *
+     * @return array
+     */
+    protected function processFieldNames(ClassMetadata $metadata, $model)
+    {
+        $data = array();
+        foreach ($metadata->getFieldNames() as $fieldName) {
+            if ($metadata->isIdentifier($fieldName)) {
+                continue;
+            }
+
+            $data[$fieldName] = $this->navigator->accept($this->getVisitor(), $this->readProperty($model, $fieldName));
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
+     * @param                                                    $model
+     *
+     * @return array
+     */
+    protected function processAssociationNames(ClassMetadata $metadata, $model)
+    {
+        $data = array();
+        foreach ($metadata->getAssociationNames() as $assocName) {
+            $propertyValue = $this->readProperty($model, $assocName);
+            if (null === $propertyValue || $metadata->isAssociationInverseSide($assocName)) {
+                continue;
+            }
+
+            if ($metadata->isSingleValuedAssociation($assocName)) {
+                $assocValue = $this->namingStrategy->modelName($propertyValue, $this->getManager()->getClassMetadata(get_class($propertyValue)));
+                $assocValue = $this->navigator->accept($this->getVisitor(), $assocValue, 'reference');
+                $data[$assocName] = $assocValue;
+            } else {
+                $data[$assocName] = array();
+                foreach ($propertyValue as $value) {
+                    $assocValue = $this->namingStrategy->modelName($value, $this->getManager()->getClassMetadata(get_class($value)));
+                    $assocValue = $this->navigator->accept($this->getVisitor(), $assocValue, 'reference');
+                    $data[$assocName][] = $assocValue;
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     protected function setDefaultOptions(OptionsResolver $resolver)
@@ -269,7 +274,7 @@ abstract class AbstractGenerator
      */
     protected function getModels(ClassMetadata $metadata)
     {
-        return $this->manager->getRepository($metadata->getName())->findAll();
+        return $this->getManager()->getRepository($metadata->getName())->findAll();
     }
 
     /**

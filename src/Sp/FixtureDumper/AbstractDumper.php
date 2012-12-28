@@ -73,6 +73,7 @@ abstract class AbstractDumper
         $metadata = $this->getDumpOrder($this->getAllMetadata());
         $generator = $this->generators->get($format)->get();
         $generator->setNavigator(new DefaultNavigator($this->handlerRegistry, $format));
+        $generator->setManager($this->objectManager);
 
         $fixtures = array();
         foreach ($metadata as $data) {

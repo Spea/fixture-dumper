@@ -148,7 +148,7 @@ class ClassFixtureGenerator extends AbstractGenerator
         $associations = array();
         foreach ($metadata->getAssociationNames() as $assocName) {
             $targetClass = $metadata->getAssociationTargetClass($assocName);
-            $associations[] = sprintf("'%s\\%s'", $options['namespace'], $this->namingStrategy->fixtureName($this->manager->getClassMetadata($targetClass)));
+            $associations[] = sprintf("'%s\\%s'", $options['namespace'], $this->namingStrategy->fixtureName($this->getManager()->getClassMetadata($targetClass)));
         }
 
         $writer->indent();
