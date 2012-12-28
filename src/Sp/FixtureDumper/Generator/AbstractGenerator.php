@@ -91,6 +91,13 @@ abstract class AbstractGenerator
         return $this->doGenerate($metadata, $preparedData, $options);
     }
 
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function setDefaultOptions(OptionsResolver $resolver)
+    {}
+
     /**
      * @param \Sp\FixtureDumper\Converter\VisitorInterface $visitor
      */
@@ -244,12 +251,6 @@ abstract class AbstractGenerator
 
         return $data;
     }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    protected function setDefaultOptions(OptionsResolver $resolver)
-    {}
 
     /**
      * @return \Sp\FixtureDumper\Converter\VisitorInterface
