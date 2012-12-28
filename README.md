@@ -30,7 +30,7 @@ $ymlGenerator = new \Sp\FixtureDumper\Generator\Alice\YamlFixtureGenerator();
 // for creating array files which can be loaded with the alice fixtures library
 $arrayGenerator = new \Sp\FixtureDumper\Generator\Alice\ArrayFixtureGenerator();
 
-$generatorMap = new \PhpCollection\Map(array('php' => $generator, 'yml' => $ymlGenerator, 'array' => $arrayGenerator);
+$generatorMap = new \PhpCollection\Map(array('class' => $generator, 'yml' => $ymlGenerator, 'array' => $arrayGenerator);
 $dumper = new \Sp\FixtureDumper\ORMDumper($manager, $registry, $generatorMap));
 // or
 $dumper = new \Sp\FixtureDumper\MongoDBDumper($manager, $registry, $generatorMap));
