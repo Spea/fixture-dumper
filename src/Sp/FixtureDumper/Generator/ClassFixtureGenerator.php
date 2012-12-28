@@ -180,9 +180,9 @@ class ClassFixtureGenerator extends AbstractGenerator
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolver $resolver)
+    public function getRequiredOptions()
     {
-        $resolver->setRequired(array('namespace'));
+        return array('namespace');
     }
 
     /**

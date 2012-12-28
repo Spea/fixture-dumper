@@ -73,6 +73,7 @@ abstract class AbstractGenerator
     public function generate(ClassMetadata $metadata, array $models = null, array $options = array())
     {
         $resolver = new OptionsResolver();
+        $resolver->setRequired($this->getRequiredOptions());
         $this->setDefaultOptions($resolver);
         $options = $resolver->resolve($options);
         if (null === $models) {
@@ -97,6 +98,14 @@ abstract class AbstractGenerator
      */
     public function setDefaultOptions(OptionsResolver $resolver)
     {}
+
+    /**
+     * @return array
+     */
+    public function getRequiredOptions()
+    {
+        return array();
+    }
 
     /**
      * @param \Sp\FixtureDumper\Converter\VisitorInterface $visitor
