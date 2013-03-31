@@ -20,14 +20,13 @@
         "doctrine/common": ">=2.2,<2.5-dev",
         "symfony/options-resolver": ">=2.1",
         "symfony/filesystem": ">=2.1",
-        "phpcollection/phpcollection": "0.1.*",
+        "phpcollection/phpcollection": "0.2.*",
         "jms/cg": "1.0.0"
     },
-    "minimum-stability": "dev",
     "require-dev": {
         "symfony/yaml": ">=2.1",
         "phpunit/phpunit": "3.7.*",
-        "doctrine/data-fixtures": "*"
+        "doctrine/data-fixtures": "1.0.*@dev"
     },
     "suggest": {
         "doctrine/data-fixtures": "For loading fixtures",
