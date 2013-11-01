@@ -219,7 +219,7 @@ abstract class AbstractGenerator
     {
         $data = array();
         foreach ($metadata->getFieldNames() as $fieldName) {
-            if ($metadata->isIdentifier($fieldName)) {
+            if ($metadata->isIdentifier($fieldName) && $metadata->usesIdGenerator()) {
                 continue;
             }
 
