@@ -21,7 +21,7 @@ class PhpVisitor extends DefaultVisitor
      */
     public function visitString($string)
     {
-        return sprintf("'%s'", $string);
+        return sprintf("'%s'", addslashes($string));
     }
 
     /**
