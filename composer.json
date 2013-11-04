@@ -4,6 +4,7 @@
     "description": "Dump fixtures from doctrine.",
     "keywords": ["database", "fixture", "dumper"],
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Martin Parsiegla",
@@ -18,8 +19,8 @@
     "require": {
         "php": ">=5.3.2",
         "doctrine/common": ">=2.2,<2.5-dev",
-        "symfony/options-resolver": ">=2.1",
-        "symfony/filesystem": ">=2.1",
+        "symfony/options-resolver": "~2.1",
+        "symfony/filesystem": "~2.1",
         "phpcollection/phpcollection": "0.2.*",
         "jms/cg": "1.0.0"
     },
