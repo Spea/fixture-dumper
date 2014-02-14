@@ -91,7 +91,10 @@ class ClassFixtureGenerator extends AbstractGenerator
         $class->setMethod($method);
 
         foreach ($data as $modelName => $modelData) {
-            $this->generateModel($modelName, $modelData, $metadata, $writer);
+            $search = array(' ', '-', 'á', 'é', 'í', 'ó', 'ú', 'ñ');
+            $replace = array('_', '_', 'a', 'e', 'i', 'o', 'u', 'n');
+            $withoutSpace = str_replace($search, $replace, $modelName);            
+            $this->generateModel($withoutSpace, $modelData, $metadata, $writer);
             $writer->writeln("");
         }
 
