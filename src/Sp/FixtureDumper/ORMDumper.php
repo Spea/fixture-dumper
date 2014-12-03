@@ -22,6 +22,10 @@ class ORMDumper extends AbstractDumper
     {
         $calc = new CommitOrderCalculator();
         foreach ($classes as $class) {
+            if (!$class->getReflectionClass()->isInstantiable()) {
+                continue;
+            }
+
             $calc->addClass($class);
 
             // $class before its parents
