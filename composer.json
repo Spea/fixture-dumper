@@ -4,7 +4,6 @@
     "description": "Dump fixtures from doctrine.",
     "keywords": ["database", "fixture", "dumper"],
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Martin Parsiegla",
