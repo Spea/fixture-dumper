@@ -26,7 +26,7 @@
     "require-dev": {
         "symfony/yaml": ">=2.1",
         "phpunit/phpunit": "3.7.*",
-        "doctrine/data-fixtures": "1.0.*@dev"
+        "doctrine/data-fixtures": "~1.1"
     },
     "suggest": {
         "doctrine/data-fixtures": "For loading fixtures",
