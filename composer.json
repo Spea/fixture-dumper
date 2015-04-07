@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "doctrine/common": ">=2.2,<2.5-dev",
+        "doctrine/common": ">=2.2,<2.6-dev",
         "symfony/options-resolver": "~2.1",
         "symfony/filesystem": "~2.1",
         "phpcollection/phpcollection": "0.2.*",
