@@ -15,4 +15,5 @@ matrix:
 
 before_script:
     - composer self-update
+    - if [[ "$TRAVIS_PHP_VERSION" != *"nightly" ]]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;
     - composer install
