@@ -12,9 +12,9 @@
 namespace Sp\FixtureDumper\Generator;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Sp\FixtureDumper\Exception\InvalidPropertyException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Persistence\ObjectManager;
-use Sp\FixtureDumper\Converter\DefaultNavigator;
 use Sp\FixtureDumper\Converter\VisitorInterface;
 use Sp\FixtureDumper\Converter\DefaultVisitor;
 

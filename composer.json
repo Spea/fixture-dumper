@@ -2,7 +2,7 @@
     "name": "sp/fixture-dumper",
     "type": "library",
     "description": "Dump fixtures from doctrine.",
-    "keywords": ["database", "fixture", "dumper"],
+    "keywords": ["database", "fixture", "dumper", "doctrine"],
     "license": "MIT",
     "authors": [
         {
@@ -21,12 +21,15 @@
         "symfony/options-resolver": "~2.1",
         "symfony/filesystem": "~2.1",
         "phpcollection/phpcollection": "0.2.*",
+        "symfony/property-access": "~2.2",
         "jms/cg": "1.0.0"
     },
     "require-dev": {
         "symfony/yaml": ">=2.1",
         "phpunit/phpunit": "3.7.*",
-        "doctrine/data-fixtures": "~1.1"
+        "doctrine/data-fixtures": "~1.1",
+        "doctrine/orm": ">=2.2,<2.6-dev",
+        "doctrine/mongodb-odm": "~1.0.0-BETA12"
     },
     "suggest": {
         "doctrine/data-fixtures": "For loading fixtures",

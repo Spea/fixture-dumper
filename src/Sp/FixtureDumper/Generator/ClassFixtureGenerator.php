@@ -12,7 +12,6 @@
 namespace Sp\FixtureDumper\Generator;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Sp\FixtureDumper\Util\ClassUtils;
 use CG\Generator\Writer;
 use CG\Generator\PhpClass;
@@ -20,7 +19,7 @@ use CG\Core\DefaultGeneratorStrategy;
 use CG\Generator\PhpMethod;
 use CG\Generator\PhpParameter;
 use Sp\FixtureDumper\Converter\PhpVisitor;
-use Symfony\Component\Form\Util\FormUtil;
+use Symfony\Component\PropertyAccess\StringUtil;
 
 /**
  * @author Martin Parsiegla <martin.parsiegla@gmail.com>
@@ -93,7 +92,7 @@ class ClassFixtureGenerator extends AbstractGenerator
         foreach ($data as $modelName => $modelData) {
             $search = array(' ', '-', 'á', 'é', 'í', 'ó', 'ú', 'ñ');
             $replace = array('_', '_', 'a', 'e', 'i', 'o', 'u', 'n');
-            $withoutSpace = str_replace($search, $replace, $modelName);            
+            $withoutSpace = str_replace($search, $replace, $modelName);
             $this->generateModel($withoutSpace, $modelData, $metadata, $writer);
             $writer->writeln("");
         }
@@ -203,11 +202,9 @@ class ClassFixtureGenerator extends AbstractGenerator
             return $method;
         }
 
-        if (class_exists('Symfony\Component\Form\Util\FormUtil') && method_exists('Symfony\Component\Form\Util\FormUtil', 'singularify')) {
-            foreach ((array) FormUtil::singularify($key) as $singularForm) {
-                if (method_exists($obj, $method = 'add'.$singularForm)) {
-                    return $method;
-                }
+        foreach ((array) StringUtil::singularify($key) as $singularForm) {
+            if (method_exists($obj, $method = 'add'.$singularForm)) {
+                return $method;
             }
         }
 
