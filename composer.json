@@ -22,7 +22,7 @@
         "symfony/filesystem": "~2.1",
         "phpcollection/phpcollection": "0.2.*",
         "symfony/property-access": "~2.2",
-        "jms/cg": "1.0.0"
+        "jms/cg": ">=1.0.0"
     },
     "require-dev": {
         "symfony/yaml": ">=2.1",
