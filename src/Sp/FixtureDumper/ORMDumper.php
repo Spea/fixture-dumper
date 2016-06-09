@@ -31,6 +31,10 @@ class ORMDumper extends AbstractDumper
             // $class before its parents
             foreach ($class->parentClasses as $parentClass) {
                 $parentClass = $this->objectManager->getClassMetadata($parentClass);
+                
+                if (!$parentClass->getReflectionClass()->isInstantiable() || $parentClass->isMappedSuperclass) {
+                    continue;
+                }
 
                 if (!$calc->hasClass($parentClass->name)) {
                     $calc->addClass($parentClass);
@@ -42,6 +46,10 @@ class ORMDumper extends AbstractDumper
             foreach ($class->associationMappings as $assoc) {
                 if ($assoc['isOwningSide']) {
                     $targetClass = $this->objectManager->getClassMetadata($assoc['targetEntity']);
+                    
+                    if (!$targetClass->getReflectionClass()->isInstantiable() || $targetClass->isMappedSuperclass) {
+                        continue;
+                    }
 
                     if (!$calc->hasClass($targetClass->name)) {
                         $calc->addClass($targetClass);
@@ -53,6 +61,10 @@ class ORMDumper extends AbstractDumper
                     // parents of $targetClass before $class, too
                     foreach ($targetClass->parentClasses as $parentClass) {
                         $parentClass = $this->objectManager->getClassMetadata($parentClass);
+
+                        if (!$parentClass->getReflectionClass()->isInstantiable() || $parentClass->isMappedSuperclass) {
+                            continue;
+                        }
 
                         if ( ! $calc->hasClass($parentClass->name)) {
                             $calc->addClass($parentClass);
