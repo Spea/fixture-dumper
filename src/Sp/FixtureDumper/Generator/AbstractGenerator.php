@@ -307,7 +307,11 @@ abstract class AbstractGenerator
         } elseif (method_exists($object, $isser)) {
             return $object->$isser();
         } elseif (property_exists($object, $property)) {
-            return $object->$property;
+            $reflectionProperty = new \ReflectionProperty($object, $property);
+            $reflectionProperty->setAccessible(true);
+
+            return $reflectionProperty->getValue($object);
+            }
         }
 
         throw new InvalidPropertyException(sprintf('Neither property "%s" nor method "%s()" nor method "%s()" exists in class "%s"', $property, $getter, $isser, get_class($object)));
