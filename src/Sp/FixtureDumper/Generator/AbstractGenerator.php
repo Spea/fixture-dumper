@@ -50,6 +50,8 @@ abstract class AbstractGenerator
      */
     protected $models;
 
+    protected $propertyReader = array();
+
 
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager|null   $manager
@@ -61,6 +63,16 @@ abstract class AbstractGenerator
         $this->manager = $manager;
         $this->namingStrategy = $namingStrategy ?: $this->getDefaultNamingStrategy();
         $this->visitor = $visitor ?: $this->getDefaultVisitor();
+    }
+
+    /**
+     * Adds a PropertyReader
+     *
+     * @param PropertyReaderInterface $propertyReader
+     */
+    public function addPropertyReader(PropertyReaderInterface $propertyReader)
+    {
+        $this->propertyReader[] = $propertyReader;
     }
 
     /**
@@ -298,6 +310,13 @@ abstract class AbstractGenerator
      */
     protected function readProperty($object, $property)
     {
+        foreach ($this->propertyReader as $reader) {
+            /** @var PropertyReaderInterface $reader */
+            if ($reader->isSupporting($object, $property)) {
+                return $reader->getValue($object, $property);
+            }
+        }
+
         $camelProp = ucfirst($property);
         $getter = 'get'.$camelProp;
         $isser = 'is'.$camelProp;
