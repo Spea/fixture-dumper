@@ -10,6 +10,14 @@ namespace Sp\FixtureDumper\Generator;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 
+/**
+ * Interface FieldNamesPostProcessorInterface
+ *
+ * In order to postprocess generates fields array, implement this interface
+ * and add it to the generator
+ *
+ * @package Sp\FixtureDumper\Generator
+ */
 interface FieldNamesPostProcessorInterface
 {
 
