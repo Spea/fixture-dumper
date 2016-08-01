@@ -50,7 +50,22 @@ abstract class AbstractGenerator
      */
     protected $models;
 
+    /**
+     * @var array
+     */
     protected $propertyReader = array();
+
+    /**
+     * @var array
+     */
+    protected $fieldNamesPostProcessors = array();
+
+    /**
+     * @var bool
+     */
+    protected $skipNullValues = false;
+
+
 
 
     /**
@@ -74,6 +89,36 @@ abstract class AbstractGenerator
     {
         $this->propertyReader[] = $propertyReader;
     }
+
+    /**
+     * adds a postprocessor
+     *
+     * @param FieldNamesPostProcessorInterface $postProcessor
+     */
+    public function addFieldNamesPostProcessor(FieldNamesPostProcessorInterface $postProcessor)
+    {
+        $this->fieldNamesPostProcessors[] = $postProcessor;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSkipNullValues()
+    {
+        return $this->skipNullValues;
+    }
+
+    /**
+     * if set to true, null values won't be dumped
+     *
+     * @param boolean $skipNullValues
+     */
+    public function setSkipNullValues($skipNullValues)
+    {
+        $this->skipNullValues = $skipNullValues;
+    }
+
+
 
     /**
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
@@ -235,8 +280,22 @@ abstract class AbstractGenerator
                 continue;
             }
 
-            $data[$fieldName] = $this->navigator->accept($this->getVisitor(), $this->readProperty($model, $fieldName));
+            $value = $this->readProperty($model, $fieldName);
+            if ($this->skipNullValues && $value === null) {
+                continue;
+            }
+
+            $data[$fieldName] = $this->navigator->accept($this->getVisitor(), $value);
         }
+        
+        foreach ($this->fieldNamesPostProcessors as $postProcessor) {
+            /** @var FieldNamesPostProcessorInterface $postProcessor */
+            if ($postProcessor->isSupporting($model, $metadata, $data)) {
+                $data = $postProcessor->getData($model, $metadata, $data);
+            }
+        }
+
+
 
         return $data;
     }
