@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andreasschacht
- * Date: 01.08.16
- * Time: 11:27
- */
 
 namespace Sp\FixtureDumper\Generator;
 
@@ -31,7 +25,7 @@ interface FieldNamesPostProcessorInterface
      *
      * @return boolean true, if this class can process the data
      */
-    public function isSupporting($object, ClassMetaData $metadata, array $data);
+    public function supports($object, ClassMetaData $metadata, array $data);
 
     /**
      * returns the processed data

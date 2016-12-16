@@ -19,7 +19,7 @@ interface PropertyReaderInterface
      *
      * @return boolean true, if this class can read a value from the property
      */
-    public function isSupporting($object, $property);
+    public function supports($object, $property);
 
     /**
      * returns the value from the property

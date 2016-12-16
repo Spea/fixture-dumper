@@ -65,9 +65,6 @@ abstract class AbstractGenerator
      */
     protected $skipNullValues = false;
 
-
-
-
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager|null   $manager
      * @param NamingStrategyInterface|null                      $namingStrategy
@@ -117,8 +114,6 @@ abstract class AbstractGenerator
     {
         $this->skipNullValues = $skipNullValues;
     }
-
-
 
     /**
      * @param \Doctrine\Common\Persistence\Mapping\ClassMetadata $metadata
@@ -290,12 +285,10 @@ abstract class AbstractGenerator
         
         foreach ($this->fieldNamesPostProcessors as $postProcessor) {
             /** @var FieldNamesPostProcessorInterface $postProcessor */
-            if ($postProcessor->isSupporting($model, $metadata, $data)) {
+            if ($postProcessor->supports($model, $metadata, $data)) {
                 $data = $postProcessor->getData($model, $metadata, $data);
             }
         }
-
-
 
         return $data;
     }
@@ -371,7 +364,7 @@ abstract class AbstractGenerator
     {
         foreach ($this->propertyReader as $reader) {
             /** @var PropertyReaderInterface $reader */
-            if ($reader->isSupporting($object, $property)) {
+            if ($reader->supports($object, $property)) {
                 return $reader->getValue($object, $property);
             }
         }
