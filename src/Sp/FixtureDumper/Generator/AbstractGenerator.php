@@ -50,6 +50,20 @@ abstract class AbstractGenerator
      */
     protected $models;
 
+    /**
+     * @var array
+     */
+    protected $propertyReader = array();
+
+    /**
+     * @var array
+     */
+    protected $fieldNamesPostProcessors = array();
+
+    /**
+     * @var bool
+     */
+    protected $skipNullValues = false;
 
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager|null   $manager
@@ -61,6 +75,44 @@ abstract class AbstractGenerator
         $this->manager = $manager;
         $this->namingStrategy = $namingStrategy ?: $this->getDefaultNamingStrategy();
         $this->visitor = $visitor ?: $this->getDefaultVisitor();
+    }
+
+    /**
+     * Adds a PropertyReader
+     *
+     * @param PropertyReaderInterface $propertyReader
+     */
+    public function addPropertyReader(PropertyReaderInterface $propertyReader)
+    {
+        $this->propertyReader[] = $propertyReader;
+    }
+
+    /**
+     * adds a postprocessor
+     *
+     * @param FieldNamesPostProcessorInterface $postProcessor
+     */
+    public function addFieldNamesPostProcessor(FieldNamesPostProcessorInterface $postProcessor)
+    {
+        $this->fieldNamesPostProcessors[] = $postProcessor;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSkipNullValues()
+    {
+        return $this->skipNullValues;
+    }
+
+    /**
+     * if set to true, null values won't be dumped
+     *
+     * @param boolean $skipNullValues
+     */
+    public function setSkipNullValues($skipNullValues)
+    {
+        $this->skipNullValues = $skipNullValues;
     }
 
     /**
@@ -223,7 +275,19 @@ abstract class AbstractGenerator
                 continue;
             }
 
-            $data[$fieldName] = $this->navigator->accept($this->getVisitor(), $this->readProperty($model, $fieldName));
+            $value = $this->readProperty($model, $fieldName);
+            if ($this->skipNullValues && $value === null) {
+                continue;
+            }
+
+            $data[$fieldName] = $this->navigator->accept($this->getVisitor(), $value);
+        }
+        
+        foreach ($this->fieldNamesPostProcessors as $postProcessor) {
+            /** @var FieldNamesPostProcessorInterface $postProcessor */
+            if ($postProcessor->supports($model, $metadata, $data)) {
+                $data = $postProcessor->getData($model, $metadata, $data);
+            }
         }
 
         return $data;
@@ -298,6 +362,13 @@ abstract class AbstractGenerator
      */
     protected function readProperty($object, $property)
     {
+        foreach ($this->propertyReader as $reader) {
+            /** @var PropertyReaderInterface $reader */
+            if ($reader->supports($object, $property)) {
+                return $reader->getValue($object, $property);
+            }
+        }
+
         $camelProp = ucfirst($property);
         $getter = 'get'.$camelProp;
         $isser = 'is'.$camelProp;
@@ -307,7 +378,10 @@ abstract class AbstractGenerator
         } elseif (method_exists($object, $isser)) {
             return $object->$isser();
         } elseif (property_exists($object, $property)) {
-            return $object->$property;
+            $reflectionProperty = new \ReflectionProperty($object, $property);
+            $reflectionProperty->setAccessible(true);
+
+            return $reflectionProperty->getValue($object);
         }
 
         throw new InvalidPropertyException(sprintf('Neither property "%s" nor method "%s()" nor method "%s()" exists in class "%s"', $property, $getter, $isser, get_class($object)));
