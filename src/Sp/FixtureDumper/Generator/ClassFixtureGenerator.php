@@ -58,7 +58,7 @@ class ClassFixtureGenerator extends AbstractGenerator
                 ->writeln('/**')
                 ->writeln(' * This code was generated automatically by the FixtureDumper library, manual changes to it')
                 ->writeln(' * may be lost upon next generation.')
-                ->writeln(' */');
+                ->write(' */');
 
             $docBlock = $writer->getContent();
         }
