@@ -70,10 +70,10 @@ abstract class AbstractGeneratorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->namingStrategy = $this->createMock('Sp\FixtureDumper\Generator\NamingStrategyInterface');
-        $this->manager = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->metadata = $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
-        $this->repository = $this->createMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->namingStrategy = $this->getMock('Sp\FixtureDumper\Generator\NamingStrategyInterface');
+        $this->manager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
+        $this->metadata = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
         $this->generator = $this->loadGenerator();
         $this->handlerRegistry = new HandlerRegistry();
         $this->handlerRegistry->addSubscribingHandler(new DateHandler());
@@ -99,7 +99,7 @@ abstract class AbstractGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetVisitorReturnsSet()
     {
-        $visitor = $this->createMock('Sp\FixtureDumper\Converter\VisitorInterface');
+        $visitor = $this->getMock('Sp\FixtureDumper\Converter\VisitorInterface');
         $this->generator->setVisitor($visitor);
 
         $result = $this->generator->getVisitor();
@@ -131,7 +131,7 @@ abstract class AbstractGeneratorTest extends \PHPUnit_Framework_TestCase
         $fieldNames = array('description', 'title', 'created');
         $associationNames = array('author');
 
-        $classMetadata = $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $classMetadata = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $classMetadata->expects($this->any())->method('getName')->will($this->returnValue('Sp\FixtureDumper\Tests\Fixture\Post'));
         $classMetadata->expects($this->any())->method('getFieldNames')->will($this->returnValue($fieldNames));
         $classMetadata->expects($this->any())->method('isSingleValuedAssociation')->will($this->returnValue(true));
@@ -141,7 +141,7 @@ abstract class AbstractGeneratorTest extends \PHPUnit_Framework_TestCase
             return array('id' => $model->getId());
         }));
 
-        $authorClassMetadata = $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $authorClassMetadata = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $authorClassMetadata->expects($this->any())->method('getName')->will($this->returnValue('Sp\FixtureDumper\Tests\Generator\Fixture\Author'));
         $authorClassMetadata->expects($this->any())->method('getIdentifierValues')->will($this->returnCallback(function($model) {
             return array('id' => $model->getId());
@@ -166,7 +166,7 @@ abstract class AbstractGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $fieldNames = array('username');
 
-        $classMetadata = $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $classMetadata = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $classMetadata->expects($this->any())->method('getName')->will($this->returnValue('Sp\FixtureDumper\Tests\Fixture\Author'));
         $classMetadata->expects($this->any())->method('getFieldNames')->will($this->returnValue($fieldNames));
         $classMetadata->expects($this->any())->method('isSingleValuedAssociation')->will($this->returnValue(true));

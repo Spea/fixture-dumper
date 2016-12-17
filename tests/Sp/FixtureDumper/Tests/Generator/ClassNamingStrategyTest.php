@@ -35,7 +35,7 @@ class ClassNamingStrategyTest extends \PHPUnit_Framework_TestCase
         $model = new Post();
         $model->setId(22);
 
-        $metadata = $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $metadata = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $metadata->expects($this->once())->method('getName')->will($this->returnValue('Acme\Demo\Entity\Post'));
 
         $result = $this->namingStrategy->fixtureName($metadata);
