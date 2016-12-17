@@ -45,10 +45,10 @@ class DumperTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->metadata = array($this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata'), $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata'));
-        $this->manager = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
+        $this->metadata = array($this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadata'), $this->createMock('Doctrine\Common\Persistence\Mapping\ClassMetadata'));
+        $this->manager = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
         $this->generator = $this->getMockBuilder('Sp\FixtureDumper\Generator\AbstractGenerator')->disableOriginalConstructor()->setMethods(array('generate', 'setNavigator'))->getMockForAbstractClass();
-        $this->handlerRegistry = $this->getMock('Sp\FixtureDumper\Converter\Handler\HandlerRegistryInterface');
+        $this->handlerRegistry = $this->createMock('Sp\FixtureDumper\Converter\Handler\HandlerRegistryInterface');
         $this->dumper = $this->getMockForAbstractClass('Sp\FixtureDumper\AbstractDumper', array($this->manager, $this->handlerRegistry, new Map(array('php' => $this->generator))), '', true, true, true, array('writeFixture', 'getAllMetadata'));
 
         $this->dumper->expects($this->once())->method('getAllMetadata')->will($this->returnValue($this->metadata));
