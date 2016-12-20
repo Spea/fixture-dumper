@@ -76,19 +76,23 @@ abstract class AbstractDumper
      */
     public function dump($path, $format, array $options = array())
     {
-        $metadata = $this->getDumpOrder($this->getAllMetadata());
+        $exclusionStrategy = $this->getExclusionStrategy();
+        $metadata = $this->getAllMetadata();
+
+        if (null !== $exclusionStrategy) {
+            $metadata = array_filter($metadata, function($class) use ($exclusionStrategy) {
+                return ! $exclusionStrategy->shouldSkipClass($class);
+            });
+        }
+
+        $metadata = $this->getDumpOrder($metadata);
         $generator = $this->generators->get($format)->get();
         $generator->setNavigator(new DefaultNavigator($this->handlerRegistry, $format));
         $generator->setManager($this->objectManager);
 
         $fixtures = array();
-        $exclusionStrategy = $this->getExclusionStrategy();
 
         foreach ($metadata as $data) {
-            if (null !== $exclusionStrategy && $exclusionStrategy->shouldSkipClass($data)) {
-                continue;
-            }
-
             $fixture = $generator->generate($data, null, $options);
             if ($this->dumpMultipleFiles) {
                 $fileName = $generator->createFileName($data, true);
