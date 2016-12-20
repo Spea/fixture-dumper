@@ -59,7 +59,7 @@ class ExclusionStrategyTest extends \PHPUnit_Framework_TestCase
                 true,
                 true,
                 true,
-                array('writeFixture', 'getAllMetadata')
+                array('writeFixture', 'getAllMetadata', 'getDumpOrder', 'getExclusionStrategy')
             );
 
         $this->dumper->expects($this->once())->method('getAllMetadata')->will($this->returnValue($this->metadata));
@@ -68,10 +68,6 @@ class ExclusionStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testCollaborationExclusionStrategy()
     {
-        $result = $this->dumper->getExclusionStrategy();
-
-        $this->assertEquals(null, $result);
-
         $this->exclusionStrategy = $this
             ->getMock('Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface');
 
@@ -81,6 +77,10 @@ class ExclusionStrategyTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getExclusionStrategy')
             ->will($this->returnValue($this->exclusionStrategy));
+
+        $this->exclusionStrategy
+            ->expects($this->exactly(2))
+            ->method('shouldSkipClass');
 
         $this->dumper->dump('/foo', 'php');
     }
