@@ -83,6 +83,7 @@ abstract class AbstractDumper
 
         $fixtures = array();
         $exclusionStrategy = $this->getExclusionStrategy();
+
         foreach ($metadata as $data) {
             if (null !== $exclusionStrategy && $exclusionStrategy->shouldSkipClass($data)) {
                 continue;

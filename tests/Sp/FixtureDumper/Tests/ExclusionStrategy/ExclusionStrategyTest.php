@@ -7,7 +7,7 @@ use PhpCollection\Map;
 /**
  * @author Miguel González <infinit89@gmail.com>
  */
-abstract class AbstractExclusionStrategyTest extends \PHPUnit_Framework_TestCase
+class ExclusionStrategyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -44,7 +44,7 @@ abstract class AbstractExclusionStrategyTest extends \PHPUnit_Framework_TestCase
         $this->generator = $this
             ->getMockBuilder('Sp\FixtureDumper\Generator\AbstractGenerator')
             ->disableOriginalConstructor()
-            ->setMethods(array('generate', 'setNavigator', 'setExclusionStrategy'))
+            ->setMethods(array('generate', 'setNavigator'))
             ->getMockForAbstractClass();
         $this->handlerRegistry = $this->getMock('Sp\FixtureDumper\Converter\Handler\HandlerRegistryInterface');
         $this->dumper = $this
@@ -66,7 +66,7 @@ abstract class AbstractExclusionStrategyTest extends \PHPUnit_Framework_TestCase
         $this->dumper->expects($this->once())->method('getDumpOrder')->will($this->returnValue($this->metadata));
     }
 
-    public function testColaborationExclusionStrategy()
+    public function testCollaborationExclusionStrategy()
     {
         $result = $this->dumper->getExclusionStrategy();
 

@@ -3,22 +3,27 @@
 namespace Sp\FixtureDumper\ExclusionStrategy;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Sp\FixtureDumper\Util\ClassUtils;
 
 /**
- * Interface ExclusionStrategyInterface
- *
- * @package Sp\FixtureDumper\ExclusionStrategy
  * @author Miguel González <infinit89@gmail.com>
  */
-interface ExclusionStrategyInterface
+class ArrayExclusionStrategy implements ExclusionStrategyInterface
 {
+    /** @var array */
+    private $skipClassesNames;
+
+    public function __construct(array $skipClassesNames)
+    {
+        $this->skipClassesNames = $skipClassesNames;
+    }
 
     /**
-     * Indicates if this class should be skipped and do not generate fixtures for this class
-     *
-     * @param $metadata
-     *
-     * @return boolean true, if this class should be skipped
+     * {@inheritdoc}
      */
-    public function shouldSkipClass(ClassMetadata $metadata);
+    public function shouldSkipClass(ClassMetadata $metadata)
+    {
+        return in_array(ClassUtils::getClassName($metadata->getName()), $this->skipClassesNames) ||
+               in_array($metadata->getName(), $this->skipClassesNames);
+    }
 }

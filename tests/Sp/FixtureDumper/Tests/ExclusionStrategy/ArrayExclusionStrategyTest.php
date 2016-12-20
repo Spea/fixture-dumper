@@ -1,44 +1,34 @@
 <?php
 
-/*
- * This file is part of the FixtureDumper library.
- *
- * (c) Martin Parsiegla <martin.parsiegla@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace Sp\FixtureDumper\Tests\ExclusionStrategy;
 
-namespace Sp\FixtureDumper\Tests\Generator;
-
-use Sp\FixtureDumper\Generator\ClassFixtureGenerator;
-use Sp\FixtureDumper\Generator\ClassNamingStrategy;
+use Sp\FixtureDumper\ExclusionStrategy\ArrayExclusionStrategy;
 
 /**
- * @author Martin Parsiegla <martin.parsiegla@gmail.com>
+ * @author Miguel González <infinit89@gmail.com>
  */
-class ClassFixtureGeneratorTest extends AbstractGeneratorTest
+class ArrayExclusionStrategyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return \Sp\FixtureDumper\Generator\AbstractGenerator
+     * @dataProvider dataProviderArrayExclusionStrategy
      */
-    protected function loadGenerator()
+    public function testShouldSkipClassName($excludedClasses, $classMetadata, $shouldSkip)
     {
-        $generator = new ClassFixtureGenerator($this->manager, new ClassNamingStrategy());
+        $exclusionStrategy = new ArrayExclusionStrategy($excludedClasses);
 
-        return $generator;
+        $this->assertEquals($exclusionStrategy->shouldSkipClass($classMetadata), $shouldSkip);
     }
 
-    protected function getOptions()
+    public function dataProviderArrayExclusionStrategy()
     {
-        return array('namespace' => 'Sp\FixtureDumper\Tests\Generator\Fixture');
-    }
+        $postClass = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
+        $postClass->expects($this->any())->method('getName')->will($this->returnValue('Acme\Demo\Entity\Post'));
 
-    /**
-     * @return string
-     */
-    protected function getFormat()
-    {
-        return 'php';
+        return array(
+            array(array('Post'), $postClass, true),
+            array(array('Acme\Demo\Entity\Post'), $postClass, true),
+            array(array('Acme\Demo\Entity\PostBlog'), $postClass, false),
+            array(array('', 'aPost', 'Posti'), $postClass, false),
+        );
     }
 }
