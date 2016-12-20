@@ -12,6 +12,7 @@
 namespace Sp\FixtureDumper;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface;
 use Sp\FixtureDumper\Generator\AbstractGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 use PhpCollection\MapInterface;
@@ -40,6 +41,11 @@ abstract class AbstractDumper
      * @var Converter\Handler\HandlerRegistryInterface
      */
     protected $handlerRegistry;
+
+    /**
+     * @var \Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface
+     */
+    protected $exclusionStrategy;
 
     /**
      * @var bool
@@ -76,7 +82,12 @@ abstract class AbstractDumper
         $generator->setManager($this->objectManager);
 
         $fixtures = array();
+        $exclusionStrategy = $this->getExclusionStrategy();
         foreach ($metadata as $data) {
+            if (null !== $exclusionStrategy && $exclusionStrategy->shouldSkipClass($data)) {
+                continue;
+            }
+
             $fixture = $generator->generate($data, null, $options);
             if ($this->dumpMultipleFiles) {
                 $fileName = $generator->createFileName($data, true);
@@ -112,6 +123,22 @@ abstract class AbstractDumper
     }
 
     /**
+     * @param \Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface $exclusionStrategy
+     */
+    public function setExclusionStrategy(ExclusionStrategyInterface $exclusionStrategy)
+    {
+        $this->exclusionStrategy = $exclusionStrategy;
+    }
+
+    /**
+     * @return \Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface
+     */
+    public function getExclusionStrategy()
+    {
+        return $this->exclusionStrategy;
+    }
+
+    /**
      * @param Generator\AbstractGenerator $generator
      * @param string                      $fixture
      * @param string                      $path
@@ -135,5 +162,4 @@ abstract class AbstractDumper
     }
 
     abstract protected function getDumpOrder(array $classes);
-
 }
