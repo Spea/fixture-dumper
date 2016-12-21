@@ -84,6 +84,4 @@ class ExclusionStrategyTest extends \PHPUnit_Framework_TestCase
 
         $this->dumper->dump('/foo', 'php');
     }
-
-
 }

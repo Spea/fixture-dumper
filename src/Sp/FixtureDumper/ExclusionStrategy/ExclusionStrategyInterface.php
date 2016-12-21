@@ -16,9 +16,9 @@ interface ExclusionStrategyInterface
     /**
      * Indicates if this class should be skipped and do not generate fixtures for this class
      *
-     * @param $metadata
+     * @param ClassMetadata $metadata
      *
-     * @return boolean true, if this class should be skipped
+     * @return boolean true if this class should be skipped
      */
     public function shouldSkipClass(ClassMetadata $metadata);
 }
