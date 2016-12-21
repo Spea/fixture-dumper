@@ -12,6 +12,7 @@
 namespace Sp\FixtureDumper;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface;
 use Sp\FixtureDumper\Generator\AbstractGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 use PhpCollection\MapInterface;
@@ -42,6 +43,11 @@ abstract class AbstractDumper
     protected $handlerRegistry;
 
     /**
+     * @var \Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface
+     */
+    protected $exclusionStrategy;
+
+    /**
      * @var bool
      */
     protected $dumpMultipleFiles;
@@ -70,12 +76,22 @@ abstract class AbstractDumper
      */
     public function dump($path, $format, array $options = array())
     {
-        $metadata = $this->getDumpOrder($this->getAllMetadata());
+        $exclusionStrategy = $this->getExclusionStrategy();
+        $metadata = $this->getAllMetadata();
+
+        if (null !== $exclusionStrategy) {
+            $metadata = array_filter($metadata, function($class) use ($exclusionStrategy) {
+                return ! $exclusionStrategy->shouldSkipClass($class);
+            });
+        }
+
+        $metadata = $this->getDumpOrder($metadata);
         $generator = $this->generators->get($format)->get();
         $generator->setNavigator(new DefaultNavigator($this->handlerRegistry, $format));
         $generator->setManager($this->objectManager);
 
         $fixtures = array();
+
         foreach ($metadata as $data) {
             $fixture = $generator->generate($data, null, $options);
             if ($this->dumpMultipleFiles) {
@@ -112,6 +128,22 @@ abstract class AbstractDumper
     }
 
     /**
+     * @param \Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface $exclusionStrategy
+     */
+    public function setExclusionStrategy(ExclusionStrategyInterface $exclusionStrategy)
+    {
+        $this->exclusionStrategy = $exclusionStrategy;
+    }
+
+    /**
+     * @return \Sp\FixtureDumper\ExclusionStrategy\ExclusionStrategyInterface
+     */
+    public function getExclusionStrategy()
+    {
+        return $this->exclusionStrategy;
+    }
+
+    /**
      * @param Generator\AbstractGenerator $generator
      * @param string                      $fixture
      * @param string                      $path
@@ -135,5 +167,4 @@ abstract class AbstractDumper
     }
 
     abstract protected function getDumpOrder(array $classes);
-
 }
